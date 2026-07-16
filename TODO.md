@@ -11,7 +11,7 @@ Deferred items, in rough priority order. (Deliberately deferred by design — se
 ## Source expansion (scout)
 - [x] **OpenReview** — wired into scout prompt 2026-07-16 (seasonal; skip fast outside review cycles).
 - [x] **alphaXiv** — wired into scout prompt 2026-07-16.
-- [ ] Evaluate Semantic Scholar recommendations API for scout candidate generation.
+- [x] Evaluate Semantic Scholar recommendations API — tested live 2026-07-16 22:04: similarity-based and weeks-stale, so REJECTED for scout candidate generation (fights recency/novelty); ADOPTED for the litreview novelty check, where nearest-neighbor papers are exactly the prior-art risk (it surfaced a June "SimLoRA" paper adjacent to our AHR pick in one call).
 
 ## Infrastructure (build only when asked)
 - [ ] **Dashboard + database** (design agreed 2026-07-16): SQLite `state/engine.db` as a rebuildable index over run artifacts (`syncRun()` after each stage; `npm run sync` to backfill); tables: runs, stages, candidates (top-5 shortlist w/ plain-English summaries), papers, outputs, review_findings, reproductions, engagement, lessons. Local web dashboard (`npm run dash`, localhost:4242, no build step): Today (live stage timeline), Shortlist, Runs drill-down, Library, Ops/metrics. Scout prompt change: top-5 candidates get `simple_summary`. Keep local-only, no auth.
