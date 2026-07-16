@@ -25,7 +25,7 @@ export const CONFIG = {
   /** Per-stage model, effort, and spend limits. */
   stages: {
     scout: { model: "claude-opus-4-8", effort: "high", maxTurns: 60, maxBudgetUsd: 3 },
-    ingest: { model: "claude-opus-4-8", effort: "medium", maxTurns: 60, maxBudgetUsd: 2 },
+    ingest: { model: "claude-opus-4-8", effort: "medium", maxTurns: 60, maxBudgetUsd: 4 },
     litreview: { model: "claude-opus-4-8", effort: "high", maxTurns: 80, maxBudgetUsd: 5 },
     analyze: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 60, maxBudgetUsd: 6 },
     reproduce: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 150, maxBudgetUsd: 10 },

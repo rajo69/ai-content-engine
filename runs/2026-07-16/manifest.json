@@ -12,7 +12,9 @@
       "finishedAt": "2026-07-16T17:05:18.624Z"
     },
     "ingest": {
-      "status": "pending"
+      "status": "failed",
+      "startedAt": "2026-07-16T22:21:55.923Z",
+      "error": "Claude Code returned an error result: Reached maximum budget ($2)"
     },
     "litreview": {
       "status": "pending"
@@ -35,5 +37,5 @@
   },
   "totalCostUsd": 0.9444775,
   "createdAt": "2026-07-16T17:02:32.396Z",
-  "updatedAt": "2026-07-16T17:05:18.625Z"
+  "updatedAt": "2026-07-16T22:28:43.160Z"
 }
