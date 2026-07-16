@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+runs/**/ingest/repo/
+runs/**/reproduction/**/venv/
+runs/**/reproduction/**/.venv/
+__pycache__/
+.claude/scheduled_tasks.lock

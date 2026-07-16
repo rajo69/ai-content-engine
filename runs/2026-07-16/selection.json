@@ -1,0 +1,17 @@
+{
+  "arxiv_id": "2607.13425",
+  "title": "Data-Efficient Adaptation of LLMs via Attention Head Reweighting",
+  "slug": "one-scalar-per-head-beats-lora",
+  "score": 7.3,
+  "justification": "AHR is the closest thing this week to a LoRA-shaped result: the entire method is 'learn one scalar per attention head', which compresses into a single sentence a non-expert immediately understands, and the claimed effect is outsized relative to that change — beating LoRA in the few-shot regime while training 200-1000x fewer parameters (~0.0001% of the model). It carries a real contrarian edge, since the field's reflex for parameter-efficient adaptation is to add low-rank matrices, and this says you may not need to add any new parameters at all, only reweight the specialization already present in the heads. The visual is essentially pre-made: a sample-count-versus-accuracy curve with AHR above LoRA, plus a heatmap of learned per-head scalars that doubles as an interpretability figure. Reproducibility is scored 7 rather than higher because I could not verify a public code repository — the abstract mentions none and targeted searches found nothing — but the method is unusually easy to reimplement from the description alone (a per-head scalar hooked into attention, trained on open text-classification sets with a small model), which fits the 90-minute box on a single modest GPU. Social velocity is scored 3 and is the honest weak spot: the paper is not on Hugging Face Daily Papers and I found no measurable X/Reddit/HN discussion, so its rank here comes from the substance of the claim rather than from observed traction.",
+  "scores": {
+    "tweetCompressibility": 9,
+    "deltaToClaimRatio": 9,
+    "contrarianAngle": 7,
+    "socialVelocity": 3,
+    "reproducibility": 7,
+    "visualPotential": 8
+  },
+  "code_url": null,
+  "dataset": "Diverse open-source text classification datasets (not named individually in the abstract; downstream stage should pull specifics from the full PDF)"
+}

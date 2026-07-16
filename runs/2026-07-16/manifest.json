@@ -1,0 +1,39 @@
+{
+  "date": "2026-07-16",
+  "runDir": "C:\\Users\\Rajo\\Desktop\\projects_2026\\ai-content-engine\\runs\\2026-07-16",
+  "paperSlug": "one-scalar-per-head-beats-lora",
+  "paperTitle": "Data-Efficient Adaptation of LLMs via Attention Head Reweighting",
+  "arxivId": "2607.13425",
+  "stages": {
+    "scout": {
+      "status": "completed",
+      "startedAt": "2026-07-16T17:02:32.399Z",
+      "costUsd": 0.9444775,
+      "finishedAt": "2026-07-16T17:05:18.624Z"
+    },
+    "ingest": {
+      "status": "pending"
+    },
+    "litreview": {
+      "status": "pending"
+    },
+    "analyze": {
+      "status": "pending"
+    },
+    "reproduce": {
+      "status": "pending"
+    },
+    "visualize": {
+      "status": "pending"
+    },
+    "write": {
+      "status": "pending"
+    },
+    "review": {
+      "status": "pending"
+    }
+  },
+  "totalCostUsd": 0.9444775,
+  "createdAt": "2026-07-16T17:02:32.396Z",
+  "updatedAt": "2026-07-16T17:05:18.625Z"
+}

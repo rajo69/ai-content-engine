@@ -1,0 +1,290 @@
+[
+  {
+    "arxiv_id": "2607.13425",
+    "title": "Data-Efficient Adaptation of LLMs via Attention Head Reweighting",
+    "url": "https://arxiv.org/abs/2607.13425",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 9,
+      "deltaToClaimRatio": 9,
+      "contrarianAngle": 7,
+      "socialVelocity": 3,
+      "reproducibility": 7,
+      "visualPotential": 8
+    },
+    "weighted_score": 7.3,
+    "one_line_pitch": "They learned ONE number per attention head and beat LoRA in the few-shot regime with 200-1000x fewer trainable parameters (~0.0001% of the model)."
+  },
+  {
+    "arxiv_id": "2607.13246",
+    "title": "Reassessing Muon for Matrix Factorization",
+    "url": "https://arxiv.org/abs/2607.13246",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 7,
+      "deltaToClaimRatio": 6,
+      "contrarianAngle": 9,
+      "socialVelocity": 3,
+      "reproducibility": 9,
+      "visualPotential": 7
+    },
+    "weighted_score": 6.9,
+    "one_line_pitch": "The hyped Muon optimizer doesn't actually beat AdamW on a clean, well-understood problem — its reported wins are hyperparameter artifacts."
+  },
+  {
+    "arxiv_id": "2607.13205",
+    "title": "Adaptive Filtering of the KV Cache",
+    "url": "https://arxiv.org/abs/2607.13205",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 8,
+      "deltaToClaimRatio": 7,
+      "contrarianAngle": 8,
+      "socialVelocity": 2,
+      "reproducibility": 6,
+      "visualPotential": 9
+    },
+    "weighted_score": 6.6,
+    "one_line_pitch": "KV cache eviction keeps the commas and braces and throws away the answers — accuracy collapses 88% to 0% on JSON; a 15MB probe recovers most of it."
+  },
+  {
+    "arxiv_id": "2607.13044",
+    "title": "The Perplexity Trap: When Patent Law Makes Human Writing Look Like AI",
+    "url": "https://arxiv.org/abs/2607.13044",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 9,
+      "deltaToClaimRatio": 5,
+      "contrarianAngle": 9,
+      "socialVelocity": 2,
+      "reproducibility": 6,
+      "visualPotential": 7
+    },
+    "weighted_score": 6.35,
+    "one_line_pitch": "Patent law legally requires humans to write like an LLM — AI detectors flag up to 80% of real granted patents as machine-generated."
+  },
+  {
+    "arxiv_id": "2607.11886",
+    "title": "Read It Back: Pretrained MLLMs Are Zero-Shot Reward Models for Text-to-Image Generation",
+    "url": "https://arxiv.org/abs/2607.11886",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 8,
+      "deltaToClaimRatio": 7,
+      "contrarianAngle": 7,
+      "socialVelocity": 5,
+      "reproducibility": 4,
+      "visualPotential": 6
+    },
+    "weighted_score": 6.2,
+    "one_line_pitch": "Ask a captioning model to read the generated image back to you — that's a reward model, no training needed. (70 HF upvotes)"
+  },
+  {
+    "arxiv_id": "2607.13380",
+    "title": "Weight Feedback Computes the Jacobian Transpose Locally in Modern Deep Networks",
+    "url": "https://arxiv.org/abs/2607.13380",
+    "code_url": "https://github.com (link stated in abstract; exact repo unverified)",
+    "scores": {
+      "tweetCompressibility": 5,
+      "deltaToClaimRatio": 6,
+      "contrarianAngle": 8,
+      "socialVelocity": 2,
+      "reproducibility": 7,
+      "visualPotential": 6
+    },
+    "weighted_score": 5.7,
+    "one_line_pitch": "Predictive coding's last non-local step turns out to be three local terms — removing autograd entirely and still matching backprop on CIFAR."
+  },
+  {
+    "arxiv_id": "2607.13372",
+    "title": "A POS Tier Is the Key to Automated Annotation for Low-Resource Language Documentation",
+    "url": "https://arxiv.org/abs/2607.13372",
+    "code_url": "https://github.com (repo stated in paper; exact URL unverified)",
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 7,
+      "contrarianAngle": 5,
+      "socialVelocity": 1,
+      "reproducibility": 8,
+      "visualPotential": 5
+    },
+    "weighted_score": 5.6,
+    "one_line_pitch": "Adding one part-of-speech column halves the annotated data needed to document an endangered language."
+  },
+  {
+    "arxiv_id": "2607.13274",
+    "title": "Deconstructing Actor-Critic: A Large-scale Empirical Study of Design Components for Practitioners",
+    "url": "https://arxiv.org/abs/2607.13274",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 4,
+      "contrarianAngle": 8,
+      "socialVelocity": 2,
+      "reproducibility": 5,
+      "visualPotential": 8
+    },
+    "weighted_score": 5.3,
+    "one_line_pitch": "33,000 experiments say the default actor-critic recipe everyone copies (Gaussian + pathwise gradients) is among the least reliable choices."
+  },
+  {
+    "arxiv_id": "2607.13707",
+    "title": "The Test Oracle Problem in Synthetic LLM-as-Judge Corpora",
+    "url": "https://arxiv.org/abs/2607.13707",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 7,
+      "deltaToClaimRatio": 5,
+      "contrarianAngle": 8,
+      "socialVelocity": 1,
+      "reproducibility": 4,
+      "visualPotential": 5
+    },
+    "weighted_score": 5.05,
+    "one_line_pitch": "One wrong decoding parameter silently truncated the synthetic wrong answers, fabricating a 32-point effect nobody caught until a human read the data."
+  },
+  {
+    "arxiv_id": "2607.13285",
+    "title": "Harness Handbook: Making Evolving Agent Harnesses Readable, Navigable, and Editable",
+    "url": "https://arxiv.org/abs/2607.13285",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 4,
+      "contrarianAngle": 6,
+      "socialVelocity": 7,
+      "reproducibility": 3,
+      "visualPotential": 4
+    },
+    "weighted_score": 4.95,
+    "one_line_pitch": "Agent harnesses have become unreadable legacy code; a handbook-shaped rewrite makes them navigable. (157 HF upvotes)"
+  },
+  {
+    "arxiv_id": "2607.12463",
+    "title": "Function-Aware Fill-in-the-Middle as Mid-Training for Coding Agent Foundation Models",
+    "url": "https://arxiv.org/abs/2607.12463",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 5,
+      "contrarianAngle": 5,
+      "socialVelocity": 6,
+      "reproducibility": 3,
+      "visualPotential": 5
+    },
+    "weighted_score": 4.95,
+    "one_line_pitch": "Make fill-in-the-middle respect function boundaries and coding agents get better. (88 HF upvotes)"
+  },
+  {
+    "arxiv_id": "2607.13124",
+    "title": "ShortOPD: Recovering Pruned LLMs with Short-to-Long On-Policy Distillation",
+    "url": "https://arxiv.org/abs/2607.13124",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 6,
+      "contrarianAngle": 4,
+      "socialVelocity": 3,
+      "reproducibility": 4,
+      "visualPotential": 6
+    },
+    "weighted_score": 4.85,
+    "one_line_pitch": "Distill pruned models on short sequences first and the long-context ability comes back for free."
+  },
+  {
+    "arxiv_id": "2607.13027",
+    "title": "PalmClaw: A Native On-Device Agent Framework for Mobile Phones",
+    "url": "https://arxiv.org/abs/2607.13027",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 3,
+      "contrarianAngle": 3,
+      "socialVelocity": 10,
+      "reproducibility": 2,
+      "visualPotential": 5
+    },
+    "weighted_score": 4.65,
+    "one_line_pitch": "A full agent framework running natively on your phone. Highest social velocity of the week (1,120 HF upvotes) but a systems release, not a testable claim."
+  },
+  {
+    "arxiv_id": "2607.13125",
+    "title": "Boogu-Image-0.1: Boosting Open-Source Unified Multimodal Understanding and Generation",
+    "url": "https://arxiv.org/abs/2607.13125",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 5,
+      "deltaToClaimRatio": 2,
+      "contrarianAngle": 2,
+      "socialVelocity": 10,
+      "reproducibility": 2,
+      "visualPotential": 7
+    },
+    "weighted_score": 4.3,
+    "one_line_pitch": "Big open-source unified multimodal model release (755 HF upvotes) — huge buzz, but nothing minimal or contrarian to reproduce."
+  },
+  {
+    "arxiv_id": "2607.12395",
+    "title": "Ring-Zero: Scaling Zero RL to a Trillion Parameters for Emergent Reasoning",
+    "url": "https://arxiv.org/abs/2607.12395",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 6,
+      "deltaToClaimRatio": 3,
+      "contrarianAngle": 5,
+      "socialVelocity": 6,
+      "reproducibility": 1,
+      "visualPotential": 6
+    },
+    "weighted_score": 4.25,
+    "one_line_pitch": "Zero-RL at a trillion parameters produces emergent reasoning (77 HF upvotes) — impossible to verify on consumer hardware."
+  },
+  {
+    "arxiv_id": "2607.13248",
+    "title": "GSM-Plus-BN: A Perturbed Bengali Mathematical Reasoning Benchmark",
+    "url": "https://arxiv.org/abs/2607.13248",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 5,
+      "deltaToClaimRatio": 3,
+      "contrarianAngle": 3,
+      "socialVelocity": 1,
+      "reproducibility": 6,
+      "visualPotential": 5
+    },
+    "weighted_score": 3.9,
+    "one_line_pitch": "Translate GSM-Plus into Bengali and the reasoning gap versus English persists across six open models."
+  },
+  {
+    "arxiv_id": "2607.13639",
+    "title": "OvisOCR2 Technical Report",
+    "url": "https://arxiv.org/abs/2607.13639",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 4,
+      "deltaToClaimRatio": 3,
+      "contrarianAngle": 2,
+      "socialVelocity": 4,
+      "reproducibility": 2,
+      "visualPotential": 4
+    },
+    "weighted_score": 3.1,
+    "one_line_pitch": "Incremental OCR model technical report (42 HF upvotes)."
+  },
+  {
+    "arxiv_id": "2607.13104",
+    "title": "Self-Improvements in Modern Agentic Systems: A Survey",
+    "url": "https://arxiv.org/abs/2607.13104",
+    "code_url": null,
+    "scores": {
+      "tweetCompressibility": 4,
+      "deltaToClaimRatio": 2,
+      "contrarianAngle": 2,
+      "socialVelocity": 3,
+      "reproducibility": 1,
+      "visualPotential": 3
+    },
+    "weighted_score": 2.45,
+    "one_line_pitch": "Survey of self-improving agent systems — no original claim to reproduce."
+  }
+]
