@@ -153,6 +153,35 @@ async function main() {
     return;
   }
 
+  // Midnight footgun guard: a bare "npm run daily" just after midnight keys to
+  // the NEW date and silently abandons yesterday's half-finished run. Warn.
+  if (!args.date && !args.only && !args.from) {
+    const fresh = Object.values(manifest.stages).every((s) => s.status === "pending");
+    const runsRoot = path.join(REPO_ROOT, "runs");
+    if (fresh && fs.existsSync(runsRoot)) {
+      const prior = fs
+        .readdirSync(runsRoot)
+        .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d) && d < date)
+        .sort()
+        .at(-1);
+      if (prior) {
+        const pmPath = path.join(runsRoot, prior, "manifest.json");
+        const selPath = path.join(runsRoot, prior, "selection.json");
+        if (fs.existsSync(pmPath)) {
+          const prev = JSON.parse(fs.readFileSync(pmPath, "utf-8")) as RunManifest;
+          const incomplete = Object.values(prev.stages).some((s) => s.status !== "completed");
+          const skippedDay =
+            fs.existsSync(selPath) &&
+            (JSON.parse(fs.readFileSync(selPath, "utf-8")) as Selection).proceed === false;
+          if (incomplete && !skippedDay) {
+            console.warn(`\n!! Previous run ${prior} is INCOMPLETE. This command starts a NEW run for ${date}.`);
+            console.warn(`!! To finish the previous run instead: npm run daily -- --date ${prior}\n`);
+          }
+        }
+      }
+    }
+  }
+
   // Quality-bar gate on resume: if a completed scout declared proceed=false,
   // a later "npm run daily" must not sneak past it into the full pipeline.
   // Explicit --from/--only is treated as a deliberate human override.
