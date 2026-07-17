@@ -3,7 +3,7 @@
 Deferred items, in rough priority order. (Deliberately deferred by design — see README "Deliberately deferred".)
 
 ## Before/with the first full run
-- [ ] **Kaggle API token** — CLI is installed (v2.1.2) but credentials are NOT configured. Create token at kaggle.com/settings → drop `kaggle.json` into `%USERPROFILE%\.kaggle\`. Unlocks the free-GPU rung (~30 h/week) for the reproduce stage.
+- [x] **Kaggle API token** — verified working 2026-07-17 (auth via `~/.kaggle/access_token`; `kaggle kernels list --mine` succeeds). Free-GPU rung is live. Optional: upgrade CLI 2.1.2 → 2.2.2 (warning only, works fine).
 - [ ] **Semantic Scholar API key** (free, higher rate limits) — request at semanticscholar.org/product/api, set env var `S2_API_KEY`. (Prompt wiring done 2026-07-16 — key signup is the only remaining step.)
 - [x] **`git init`** the repo — done 2026-07-16, initial commit made.
 - [ ] **First full run** (`npm run daily` resumes from ingest on the 2026-07-16 AHR paper) — expect prompt tuning from what breaks; capture lessons into `state/lessons.md`.
