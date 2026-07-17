@@ -1,0 +1,157 @@
+{
+  "per_arm": {
+    "gpt2|icl": {
+      "mean": 50.83,
+      "std": 7.07,
+      "per_seed": [
+        60.83,
+        45.83,
+        45.83
+      ]
+    },
+    "gpt2|ahr": {
+      "mean": 48.61,
+      "std": 3.93,
+      "per_seed": [
+        54.17,
+        45.83,
+        45.83
+      ]
+    },
+    "gpt2|lora": {
+      "mean": 48.61,
+      "std": 3.93,
+      "per_seed": [
+        54.17,
+        45.83,
+        45.83
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|icl": {
+      "mean": 92.5,
+      "std": 0.68,
+      "per_seed": [
+        91.67,
+        93.33,
+        92.5
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|ahr": {
+      "mean": 89.17,
+      "std": 2.04,
+      "per_seed": [
+        86.67,
+        91.67,
+        89.17
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|lora": {
+      "mean": 66.67,
+      "std": 13.81,
+      "per_seed": [
+        70.0,
+        81.67,
+        48.33
+      ]
+    }
+  },
+  "paired_deltas": {
+    "gpt2|ahr-icl": {
+      "mean": -2.22,
+      "std": 3.14,
+      "per_seed": [
+        -6.67,
+        0.0,
+        0.0
+      ]
+    },
+    "gpt2|lora-icl": {
+      "mean": -2.22,
+      "std": 3.14,
+      "per_seed": [
+        -6.67,
+        0.0,
+        0.0
+      ]
+    },
+    "gpt2|ahr-lora": {
+      "mean": 0.0,
+      "std": 0.0,
+      "per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|ahr-icl": {
+      "mean": -3.33,
+      "std": 1.36,
+      "per_seed": [
+        -5.0,
+        -1.67,
+        -3.33
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|lora-icl": {
+      "mean": -25.83,
+      "std": 13.59,
+      "per_seed": [
+        -21.67,
+        -11.67,
+        -44.17
+      ]
+    },
+    "Qwen/Qwen2.5-0.5B|ahr-lora": {
+      "mean": 22.5,
+      "std": 13.25,
+      "per_seed": [
+        16.67,
+        10.0,
+        40.83
+      ]
+    }
+  },
+  "verdicts": {
+    "P1": {
+      "verdict_as_preregistered_in_predictions_json": "not supported",
+      "verdict_as_specified_in_analysis_core_md_s7": "supported",
+      "scoring_conflict": true,
+      "gpt2_ahr_minus_lora": 0.0,
+      "gpt2_std": 0.0,
+      "qwen_ahr_minus_lora": 22.5,
+      "qwen_std": 13.25,
+      "note": "predictions.json predicted a >=3pt AHR margin on both models; core.md s7 predicted NO margin on the weak model and flagged the both-models form as falsifiable-by-construction on SST-2. s7 is the better-calibrated form."
+    },
+    "P2": {
+      "verdict_as_preregistered_in_predictions_json": "supported",
+      "verdict_as_specified_in_analysis_core_md_s7": "not supported",
+      "scoring_conflict": true,
+      "gpt2_lora_minus_icl": -2.22,
+      "gpt2_std": 3.14,
+      "qwen_lora_minus_icl": -25.83,
+      "qwen_std": 13.59,
+      "gpt2_half": "LoRA < ICL (predicted LoRA > ICL) [indistinguishable at this scale: |delta| < seed std]",
+      "note": "Qwen half holds decisively (-25.83, |delta| >> seed std). GPT-2 half: s7 predicted LoRA > ICL; observed -2.22 with std 3.14, i.e. BELOW seed spread, so by the variance rule no direction is declarable there \u2014 the GPT-2 half is untestable rather than cleanly reversed."
+    },
+    "P3": {
+      "verdict": "not supported",
+      "gpt2_ahr_minus_icl": -2.22,
+      "gpt2_std": 3.14,
+      "qwen_ahr_minus_icl": -3.33,
+      "qwen_std": 1.36,
+      "separation": 1.11,
+      "separation_threshold": 3.0,
+      "pooled_seed_spread": 3.42,
+      "separation_below_seed_spread": true,
+      "note": "Ordering nominally holds (-2.22 > -3.33) but separation 1.11 is under BOTH the pre-registered 3.0 threshold AND the pooled seed spread 3.42, so the ordering itself is not declarable. predictions.json's overlapping partially_supported_if clause is not honoured: its not_supported_if criterion fires, and core.md s7 (the source) has no partial clause."
+    },
+    "P4": {
+      "verdict": "supported",
+      "qwen_ahr_minus_icl": -3.33,
+      "qwen_std": 1.36,
+      "qwen_icl_acc": 92.5,
+      "paper_sst2_fit_prediction": 0.51,
+      "within_5_of_fit": true
+    }
+  }
+}

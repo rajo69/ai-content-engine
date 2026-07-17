@@ -1,0 +1,734 @@
+{
+ "recommendedPapers": [
+  {
+   "paperId": "b8b60f2928946e0189049267e2a192b3093b99e4",
+   "externalIds": {
+    "DOI": "10.1109/iCoMET69771.2026.11591749",
+    "CorpusId": 289980430
+   },
+   "title": "Parameter-Efficient Fine-Tuning vs Large Zero-Shot Language Models: A Controlled Cross-Task Evaluation of Performance and Efficiency",
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/iCoMET69771.2026.11591749?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/iCoMET69771.2026.11591749, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-22",
+   "authors": [
+    {
+     "authorId": "150104271",
+     "name": "Faryal Shamsi"
+    },
+    {
+     "authorId": "2448461475",
+     "name": "Sher Muhammad Doudpota"
+    }
+   ],
+   "abstract": "Recent advancements in large language models (LLMs) such as BLOOMZ, Falcon, LLaMA, GPT-2, GPT-3.5 Turbo, and BART-large-cnn have demonstrated remarkable capabilities across a wide range of NLP tasks. However, the computational and memory requirements of these models is often require substantial. Therefore in larger setups, using these models using Zero-shot learning becomes impractical. Parameter-Efficient Fine-Tuning (PEFT) methods, including Low-Rank Adaptation (LoRA), Quantized Low-Rank Adaptation (QLoRA), and prompt-based tuning, offer a solution by reducing the number of trainable parameters while retaining strong task performance. This study aims to compare zero-shot performance of these large LLMs with PEFT approaches. The comparison is performed on two representative NLP tasks: text classification on the AG News dataset and text summarization on SAMSum dataset. The experiments show that smaller models with Quantized Low-Rank Adaptation (QLoRA) achieves performance thats is equivalent to zero-shot learning using much larger LLMs. Overall, QLoRA showed consistent improvements across ROUGE-1, ROUGE-2, and BLEU scores compared to zero-shot baselines, while using substantially fewer trainable parameters. In classification tasks, LoRA and QLoRA achieved noticeably higher accuracy and F1-scores, demonstrating that well fine-tuned smaller models can outperform much larger models on task-specific problems. In conclusion, QLoRA delivers strong performance with high efficiency, outperforming large zero-shot models. Future work will extend this analysis to broader tasks and datasets to further validate these findings."
+  },
+  {
+   "paperId": "6a359f0ee28aac7864ca90d71e976cc652473d96",
+   "externalIds": {
+    "DOI": "10.66542/irjsrr.v2.i1.000022",
+    "CorpusId": 288679509
+   },
+   "title": "Energy-Efficient Training of Large Language Models Through Sparse Attention and Low-Rank Adaptation (LoRA-S)",
+   "openAccessPdf": {
+    "url": "https://doi.org/10.66542/irjsrr.v2.i1.000022",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.66542/irjsrr.v2.i1.000022?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.66542/irjsrr.v2.i1.000022, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-19",
+   "authors": [
+    {
+     "authorId": "48931556",
+     "name": "A. Tiwari"
+    },
+    {
+     "authorId": "2438791506",
+     "name": "Pawar Harish"
+    }
+   ],
+   "abstract": "Abstract: Large language models (LLMs) such as GPT and BERT have revolutionized natural language processing but impose enormous computational and energy costs due to their massive parameter sizes and quadratic attention complexity. This study introduces LoRA-S, a unified framework that combines Low-Rank Adaptation (LoRA) with sparse attention mechanisms to achieve energy-efficient and scaljournalable training of transformer-based LLMs. By freezing pretrained weights and injecting low-rank trainable matrices into attention and feed-forward layers, LoRA reduces the number of trainable parameters by over 90%, significantly lowering gradient computation and memory overhead. Simultaneously, sparse attention restricts token interactions to structured subsets, cutting attention-related FLOPs from 100 G to 7 G in WikiText-2 experiments. Comparative analysis across Full Fine-Tuning, LoRA, and LoRA-S demonstrates that LoRA-S achieves the lowest energy consumption of 22,380 J (6.22 Wh) while maintaining competitive task performance, with perplexity of 115.26 on WikiText-2 and sentiment classification accuracy of 73.90% on IMDB. Pareto frontier analysis confirms LoRA-S as an optimal trade-off between computational efficiency and predictive capability, enabling resource-constrained and eco-friendly model deployment. These results establish LoRA-S as a practical step toward Green AI, providing a novel, integrated approach to minimize FLOPs and parameter updates without substantially compromising LLM performance."
+  },
+  {
+   "paperId": "a2916484cb01e36a1d6bb17647688bf275d4a640",
+   "externalIds": {
+    "DBLP": "conf/acl/ShiLZC26",
+    "DOI": "10.18653/v1/2026.acl-long.46",
+    "CorpusId": 289796190
+   },
+   "title": "RoBSA: RoPE-based Blockwise Sparse Multi-head Latent Attention",
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.acl-long.46.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.18653/v1/2026.acl-long.46?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.18653/v1/2026.acl-long.46, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": null,
+   "authors": [
+    {
+     "authorId": "2394097518",
+     "name": "Xinyu Shi"
+    },
+    {
+     "authorId": "2350513479",
+     "name": "Kairong Luo"
+    },
+    {
+     "authorId": "2446989664",
+     "name": "Zhen Zheng"
+    },
+    {
+     "authorId": "2350504859",
+     "name": "Wenguang Chen"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have rapidly advanced in recent years, scaling up in both parameter count and context length. However, as context windows extend from thousands to hundreds of thousands of tokens, attention computation becomes the dominant source of memory usage and runtime in decoding stages, severely limiting the efficiency and scalability of long-context LLMs. Sparse attention has emerged as a promising solution, reducing complexity by computing attention over only a subset of context tokens. However, the sparse attention for Multi-head Latent Attention (MLA) which is a variant of standard MHA is rarely studied. In this paper, we introduce RoPE-based Block-wise Sparse Attention (RoBSA), a method designed specifically for MLA during the decoding stage of model inference. RoBSA leverages the decoupled nature of RoPE within MLA to implement token selection in a blockwise manner. RoBSA is a lightweight, training-free, and layer-aware algorithm that can be integrated in a plug-and-play fashion. Our method significantly reduces end-to-end inference latency in the decoding stage by up to 2 . 55 \u00d7 with minimal accuracy loss compared to full attention in long-context scenarios for very large models."
+  },
+  {
+   "paperId": "3f34a57b18215f3a5610880526332400e3ad57f0",
+   "externalIds": {
+    "ArXiv": "2605.24417",
+    "DBLP": "journals/corr/abs-2605-24417",
+    "DOI": "10.48550/arXiv.2605.24417",
+    "CorpusId": 288670116
+   },
+   "title": "LLMTabBench: Evaluating LLMs on Binary Tabular Classification From Zero to Few Shots",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.24417, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-23",
+   "authors": [
+    {
+     "authorId": "2438713903",
+     "name": "Daria Grushina"
+    },
+    {
+     "authorId": "2281035251",
+     "name": "K. Kuvshinova"
+    },
+    {
+     "authorId": "2290006588",
+     "name": "A. Kostromina"
+    },
+    {
+     "authorId": "98829873",
+     "name": "A. Temirkhanov"
+    },
+    {
+     "authorId": "2372246905",
+     "name": "Mile Mitrovic"
+    },
+    {
+     "authorId": "2125682227",
+     "name": "Dmitry Simakov"
+    }
+   ],
+   "abstract": "Supervised classification on tabular data remains a central machine learning task, but its dependence on large labeled datasets limits its applicability in data-scarce settings. Few-shot methods such as TabPFN achieve strong performance through large-scale synthetic pretraining, yet still require labeled context examples. Large Language Models (LLMs) offer a more flexible alternative through zero- and few-shot in-context learning from task descriptions, but their behavior on tabular data remains inconsistent. We introduce LLMTabBench, a benchmark for evaluating LLMs on tabular classification under low-data conditions. The benchmark studies how LLM prior knowledge interacts with task descriptions and few-shot examples, and how performance changes with increasing data complexity across real-world and controlled synthetic datasets. We find that LLMs can be highly competitive in zero-shot settings, sometimes outperforming models given few-shot examples. However, additional examples may conflict with prior knowledge, thereby degrading performance. We also observe a complexity threshold at which LLM performance declines and few-shot examples become less useful. These results clarify key limits of in-context learning for tabular data and inform the deployment of LLMs in low-data regimes."
+  },
+  {
+   "paperId": "2c0391d25e7387ddd15f58dad141b9a66a54f92d",
+   "externalIds": {
+    "PubMedCentral": "13253566",
+    "DOI": "10.1093/pnasnexus/pgag197",
+    "CorpusId": 288922240,
+    "PubMed": "42292881"
+   },
+   "title": "Robustness is important: Limitations of LLMs for predictions on tabular data",
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1093/pnasnexus/pgag197",
+    "status": "GOLD",
+    "license": "CCBYNC",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC13253566, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-06-01",
+   "authors": [
+    {
+     "authorId": "2377645771",
+     "name": "Hejia Liu"
+    },
+    {
+     "authorId": "2464155",
+     "name": "Mochen Yang"
+    },
+    {
+     "authorId": "1744007",
+     "name": "G. Adomavicius"
+    }
+   ],
+   "abstract": "Abstract Large language models (LLMs) are being applied in a wide array of settings, well beyond typical language-oriented use cases. In particular, LLMs are increasingly used as a plug-and-play method for generating predictions on tabular data. Prior work has shown that LLMs, via in-context learning (ICL) or supervised fine-tuning (SFT), perform comparably with many tabular supervised learning techniques. However, we identify a critical vulnerability of using LLMs for tabular prediction\u2014making changes to data representation that are completely irrelevant to the underlying learning task can drastically alter LLMs\u2019 predictions on the same data. For example, simply changing variable names can sway the size of prediction error by as much as 82% in certain settings. Such prediction sensitivity with respect to task-irrelevant variations manifests under both ICL and SFT, for both close-weight and open-weight general-purpose LLMs. Moreover, by examining the attention scores of two open-weight LLMs, we discover a nonuniform attention pattern: training examples and variable names/values occupying certain positions in the prompt receive more attention when generating output tokens, even though fundamentally there should not be different emphasis a priori on data rows/columns in specific positions. This partially explains the sensitivity due to task-irrelevant variations. We also consider several state-of-the-art tabular foundation models trained specifically for tabular prediction. They achieve better prediction performance than general-purpose LLMs but are still not immune to task-irrelevant variations. Overall, LLMs (especially general-purpose models) currently lack a basic level of robustness to be used as a principled prediction tool."
+  },
+  {
+   "paperId": "ce1e9417797a19bee40d31815d809b32231db97e",
+   "externalIds": {
+    "DBLP": "conf/acl/WangHGHWWMF26",
+    "DOI": "10.18653/v1/2026.acl-long.842",
+    "CorpusId": 289782847
+   },
+   "title": "Soft Orthogonal Low-Rank Adaptation for Knowledge Sharing in Large Language Model Continual Learning",
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.acl-long.842.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.18653/v1/2026.acl-long.842?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.18653/v1/2026.acl-long.842, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": null,
+   "authors": [
+    {
+     "authorId": "2257104326",
+     "name": "Yitong Wang"
+    },
+    {
+     "authorId": "2186400636",
+     "name": "Xue Han"
+    },
+    {
+     "authorId": "2349068567",
+     "name": "Wenchun Gao"
+    },
+    {
+     "authorId": "2273679992",
+     "name": "Qian Hu"
+    },
+    {
+     "authorId": "2292633521",
+     "name": "Jiahui Wang"
+    },
+    {
+     "authorId": "2447652397",
+     "name": "Ziqing Wang"
+    },
+    {
+     "authorId": "2348740767",
+     "name": "Lijun Mei"
+    },
+    {
+     "authorId": "2144086553",
+     "name": "Junlan Feng"
+    }
+   ],
+   "abstract": "When large language models are used in real-world scenarios, continual learning (CL) becomes a non-trivial problem. In particular, continual learning with modern LLMs is challenged both by the substantial computational costs induced by their massive parameter scale, and by the limitations of current CL meth-ods, which are mainly designed to mitigate catastrophic forgetting while neglecting knowledge sharing across tasks. We further observe that models with stronger performance exhibit stronger inter-task connections. In light of the above challenges and findings, we propose At-tribution Scores-based Soft Orthogonality Low-Rank Adaptation (ASO-LoRA), an effective and efficient framework that simultaneously facilitates knowledge transfer while mitigating catastrophic forgetting. Specifically, ASO-LoRA initially assigns task-specific parameter subspaces for new tasks utilizing multi-LoRA modules, enabling for efficient training and inference without relying on task labels. Then, ASO-LoRA leverages attribution scores to evaluate task similarity and employs soft orthogonality between task-specific subspaces, guiding gradient updates in directions that promote parameter isolation, achieving a balance between knowledge transfer and preservation. Experiments are carried out on both the T5-large and the LLaMA2-7B, showing ASO-LoRA\u2019s superior performance and suitability as a plug-in CL solution for general Transformer-based LLMs. Code is available at https://github. com/736619821/ASO-LORA ."
+  },
+  {
+   "paperId": "f7491bb4408e6da7b5e506e51e9afaae052d6110",
+   "externalIds": {
+    "ArXiv": "2605.30919",
+    "DBLP": "journals/corr/abs-2605-30919",
+    "DOI": "10.48550/arXiv.2605.30919",
+    "CorpusId": 288813866
+   },
+   "title": "De-attribute to Forget for LLM Unlearning",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.30919, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-29",
+   "authors": [
+    {
+     "authorId": "2249843937",
+     "name": "Xinyang Lu"
+    },
+    {
+     "authorId": "2311112324",
+     "name": "Jiabao Pan"
+    },
+    {
+     "authorId": "2003246244",
+     "name": "Rachael Hwee Ling Sim"
+    },
+    {
+     "authorId": "2307597391",
+     "name": "See-Kiong Ng"
+    },
+    {
+     "authorId": "2238206423",
+     "name": "Anthony K. H. Tung"
+    },
+    {
+     "authorId": "145454065",
+     "name": "K. H. Low"
+    }
+   ],
+   "abstract": "The rapid development of large language models (LLMs) has raised concerns on the use of inappropriate data for training, which has led to a growing interest in LLM unlearning. Many existing LLM unlearning approaches rely on optimizing prediction loss(es), such as maximizing the loss on the forget set, but often face critical issues like over-forgetting and poor model utility. To address them, this paper novelly frames the optimization objective for LLM unlearning as one of zeroing out data attribution instead. In particular, we propose the first LLM unlearning framework based on data attribution rewards called DareU that performs reinforcement learning to update the LLM by reducing the attribution score of its generated responses (i.e., de-attributing) to the forget data owners. Empirical evaluation using an LLM classifier as an efficient approximation of attribution shows that DareU outperforms existing baselines by achieving effective unlearning while balancing forget quality and model utility well."
+  },
+  {
+   "paperId": "47e0be6a2b3e9f22d459f6884aea166fa9bd511c",
+   "externalIds": {
+    "ArXiv": "2605.29498",
+    "DBLP": "journals/corr/abs-2605-29498",
+    "DOI": "10.48550/arXiv.2605.29498",
+    "CorpusId": 288741995
+   },
+   "title": "Mask the Target: A Plug-and-Play Regularizer Against LoRA Forgetting",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.29498, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-28",
+   "authors": [
+    {
+     "authorId": "2346643112",
+     "name": "Runze Xu"
+    },
+    {
+     "authorId": "2366741452",
+     "name": "Arpit Garg"
+    },
+    {
+     "authorId": "101834772",
+     "name": "Hemanth Saratchandran"
+    },
+    {
+     "authorId": "2293303939",
+     "name": "Simon Lucey"
+    }
+   ],
+   "abstract": "Low-Rank Adaptation (LoRA) has become one of the most widely used fine-tuning mechanisms for adapting large language models to new domains, tasks, and users. Yet adaptation performance alone can obscure an important failure mode: LoRA updates may improve performance on the target distribution while degrading prior capabilities learned during pretraining and alignment. We show that this forgetting becomes especially severe when the adaptation distribution differs substantially from the models original training or alignment distributions. The challenge is amplified in practical settings, where the original training and alignment data are typically unavailable. Motivated by this constraint, we study how LoRA based adaptation balances new learning against forgetting in a replay-free setting, and introduce a simple output space regularizer that can be added directly to existing training pipelines. Our method removes the ground-truth token from both the base and adapted model distributions, renormalizes the remaining probabilities, and applies KL regularization only over the non-target vocabulary. This preserves the base models relative preferences among alternative tokens without directly opposing the cross-entropy signal required for adaptation. As the regularizer acts only at the loss level, it requires no replay data, architectural changes, adapter redesign, or inference-time overhead, and can be applied directly to existing LoRA variants. Across all LoRA variants tested and across various backbones, our method improves the frontier between new learning and forgetting when the adaptation distribution differs substantially from the base models original training or alignment distributions, suggesting a broadly applicable route toward more reliable LLM updating."
+  },
+  {
+   "paperId": "7479577ee6ccc0107a9c184245d91f5a8baf8508",
+   "externalIds": {
+    "DOI": "10.1007/s10791-026-10325-4",
+    "CorpusId": 289695674
+   },
+   "title": "SimLoRA for enhanced domain specific LLM fine tuning using attention weighted low rank adaptation and RLHF",
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1007/s10791-026-10325-4.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s10791-026-10325-4?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s10791-026-10325-4, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-06-30",
+   "authors": [
+    {
+     "authorId": "1918376",
+     "name": "Wujian Yang"
+    },
+    {
+     "authorId": "2445892155",
+     "name": "Huibao Zhang"
+    },
+    {
+     "authorId": "2391492708",
+     "name": "Haotian Jin"
+    },
+    {
+     "authorId": "2445967935",
+     "name": "Sunyang Chen"
+    },
+    {
+     "authorId": "67075028",
+     "name": "Qihao Shi"
+    },
+    {
+     "authorId": "2237598451",
+     "name": "Guanlin Chen"
+    }
+   ],
+   "abstract": "The digital transformation of public services has created an urgent demand for intelligent question-answering (QA) systems that can deliver both accurate and context-aware responses. While Low-Rank Adaptation (LoRA) enables efficient fine-tuning of large language models (LLMs) for domain-specific tasks, it struggles to capture sparse yet critical personalized information\u2013such as residency status, age, or contribution history\u2013that appears in only a small fraction of training data. This paper proposes SimLoRA, a novel parameter-efficient fine-tuning method that integrates the SimAM (A Simple, Parameter-Free Attention Module) 3D attention mechanism into the LoRA framework. SimLoRA dynamically weights low-rank updates based on neuronal distinctiveness, amplifying the contribution of informative features while suppressing generic patterns, all without introducing additional trainable parameters. We evaluate our approach on a real-world citizen card QA dataset from Hangzhou, China, consisting of 70,000 QA pairs where 3% of queries contain personalized information. Furthermore, as an optional enhancement, applying Reinforcement Learning from Human Feedback (RLHF) using the Proximal Policy Optimization (PPO) algorithm yields a 57.2% win rate against the SimLoRA baseline in real-world preference-based evaluation, producing responses better aligned with user expectations for public service scenarios. SimLoRA offers an effective, computationally efficient pathway for deploying personalized LLM-based QA systems in critical public service domains where accuracy and personalization are paramount."
+  },
+  {
+   "paperId": "33a92288acf21e2281702e80c5512b88ea5868f2",
+   "externalIds": {
+    "ArXiv": "2607.05727",
+    "CorpusId": 289941131
+   },
+   "title": "SAMPLe: SAM-based Optimizer for Prompt Learning in VLMs",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2607.05727, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-07-07",
+   "authors": [
+    {
+     "authorId": "2204758132",
+     "name": "Hossein Rajoli"
+    },
+    {
+     "authorId": "153812965",
+     "name": "Fatemeh Lotfi"
+    },
+    {
+     "authorId": "2204866947",
+     "name": "Niloufar Alipour Talemi"
+    },
+    {
+     "authorId": "83339225",
+     "name": "Hossein Kashiani"
+    },
+    {
+     "authorId": "2295945361",
+     "name": "Xiaolong Ma"
+    },
+    {
+     "authorId": "2393138464",
+     "name": "Fatemeh Afghah"
+    }
+   ],
+   "abstract": "Pre-trained Vision-Language Models (VLMs) like CLIP have proven highly effective as foundation models for various downstream applications. However, prompt learning in VLMs encounters a performance-generalization dilemma: while prompts can be tuned to achieve high accuracy on seen distributions, this tuning process often undermines their generalizability to unseen data. The limited set of learnable prompts, which contextualize and condition the input to steer it toward the task within the pretrained VLM, tends to overfit the training data, leading to a trade-off between task-specific performance and preserving generalization. To address this dilemma, we introduce SAMPLe (Sharpness-Aware Minimization Prompt Learning), a plug-in sharpness-aware optimizer that enhances prompt generalizability by accounting for loss landscape sharpness. Unlike conventional methods, SAMPLe balances exploration and exploitation by satisfying objective function constraints at each step, dynamically adapting to the current optimization state based on the local curvature and gradient properties. This approach reduces overfitting on seen distributions and improves adaptability to unseen data, preserving the generalization potential of pre-trained VLM models. We integrate SAMPLe into multiple prompt learning frameworks, including CoOp, CoCoOp, MaPLe, TCP, and Co-Prompt, demonstrating its effectiveness across diverse methods. Experiments show that SAMPLe elevates prompt learning frameworks and consistently outperforms existing optimizers across diverse settings, establishing itself as a robust, model-agnostic solution for prompt learning."
+  },
+  {
+   "paperId": "ef35c4eaf63dff2ed79b47687b91103488a4fbb8",
+   "externalIds": {
+    "DBLP": "journals/ijcv/JiaoCHLS26",
+    "DOI": "10.1007/s11263-026-02877-1",
+    "CorpusId": 267335231
+   },
+   "title": "From Training-Free to Adaptive: Empirical Insights into MLLMs\u2019 Understanding of Detection Information",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s11263-026-02877-1?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s11263-026-02877-1, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-06-01",
+   "authors": [
+    {
+     "authorId": "2281947967",
+     "name": "Qirui Jiao"
+    },
+    {
+     "authorId": "49025612",
+     "name": "Daoyuan Chen"
+    },
+    {
+     "authorId": "2237943131",
+     "name": "Yilun Huang"
+    },
+    {
+     "authorId": "2237607166",
+     "name": "Yaliang Li"
+    },
+    {
+     "authorId": "2266438880",
+     "name": "Ying Shen"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "7dd2f8d8155c42f0a58316ee6f9c397962acd7e1",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2605-20613",
+    "ArXiv": "2605.20613",
+    "DOI": "10.48550/arXiv.2605.20613",
+    "CorpusId": 288655661
+   },
+   "title": "HRM-Text: Efficient Pretraining Beyond Scaling",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.20613, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-20",
+   "authors": [
+    {
+     "authorId": "2354297120",
+     "name": "Guan Wang"
+    },
+    {
+     "authorId": "2211001638",
+     "name": "Chang-Le Liu"
+    },
+    {
+     "authorId": "2384058965",
+     "name": "Chenyu Wang"
+    },
+    {
+     "authorId": "2363525958",
+     "name": "Cai Zhou"
+    },
+    {
+     "authorId": "2109316326",
+     "name": "Yuhao Sun"
+    },
+    {
+     "authorId": "2301627180",
+     "name": "Yifei Wu"
+    },
+    {
+     "authorId": "2315336163",
+     "name": "Shuai Zhen"
+    },
+    {
+     "authorId": "2253457727",
+     "name": "Luca Scimeca"
+    },
+    {
+     "authorId": "1388837087",
+     "name": "Yasin Abbasi-Yadkori"
+    }
+   ],
+   "abstract": "The current pretraining paradigm for large language models relies on massive compute and internet-scale raw text, creating a significant barrier to foundational research. In contrast, biological systems demonstrate highly sample-efficient learning through multi-timescale processing, such as the functional organization of the frontoparietal loop. Taking this as inspiration, we introduce HRM-Text, which replaces standard Transformers with a Hierarchical Recurrent Model (HRM) that decouples computation into slow-evolving strategic and fast-evolving execution layers. To stabilize this deep recurrence for language modeling, we introduce MagicNorm and warmup deep credit assignment. Furthermore, instead of standard raw-text pretraining, we train exclusively on instruction-response pairs using a task-completion objective and PrefixLM masking. Serving as an empirical existence proof of efficient pretraining, a 1B-parameter HRM-Text model trained from scratch on only 40 billion unique tokens and $1,500 budget achieves 60.7% on MMLU, 81.9% on ARC-C, 82.2% on DROP, 84.5% on GSM8K, and 56.2% on MATH. Despite utilizing roughly 100-900x fewer training tokens and 96-432x less estimated compute than standard baselines, HRM-Text performs competitively with 2-7B parameter open models. These results demonstrate that co-designing architectures and objectives can radically reduce the compute-to-performance ratio, making pretraining from scratch accessible to the broader research community."
+  },
+  {
+   "paperId": "3694bf0e79e3c99b699d48207947e7cfab6d0a0e",
+   "externalIds": {
+    "ArXiv": "2605.17849",
+    "DBLP": "journals/corr/abs-2605-17849",
+    "DOI": "10.48550/arXiv.2605.17849",
+    "CorpusId": 288652869
+   },
+   "title": "Generating Pretraining Tokens from Organic Data for Data-Bound Scaling",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.17849, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-18",
+   "authors": [
+    {
+     "authorId": "2275526493",
+     "name": "Zichun Yu"
+    },
+    {
+     "authorId": "2275170116",
+     "name": "Chenyan Xiong"
+    }
+   ],
+   "abstract": "LLM pretraining is shifting from a compute-bound to a data-bound regime, where available human (organic) text falls far short of scaling demands. However, reaching the data-bound regime does not mean the model has fully utilized its organic corpus. In this paper, we introduce SynPro, a synthetic data generation framework that helps LLMs more thoroughly learn from limited organic data. SynPro applies two operations, rephrasing and reformat, that present the same organic source in diverse forms to facilitate deeper learning without introducing external information. Both generators are optimized via reinforcement learning with quality, faithfulness, and data influence rewards, and are continuously updated as pretraining plateaus to target content the model has yet to absorb. We pretrain 400M and 1.1B models with 10% of their Chinchilla-optimal tokens (0.8B and 2.2B) from DCLM-Baseline, reflecting a realistic data-bound regime in frontier pretraining. Our results reveal that organic data is significantly underutilized by standard repetition: SynPro unlocks 3.7-5.2x the effective tokens of repetition, even surpassing the non-data-bound oracle that trains on equivalent unique data at the 1.1B scale. Analyses confirm that faithful, model-aware synthesis sustains data-bound scaling without causing distribution collapse. We open-source our code at https://github.com/cxcscmu/SynPro."
+  },
+  {
+   "paperId": "ce8bf30148566f642db6f5f87764c9e6249f229a",
+   "externalIds": {
+    "DOI": "10.66693/mathai.1009",
+    "CorpusId": 290166629
+   },
+   "title": "OLORA+: A HYBRID APPROACH TO PARAMETER- EFFICIENT FINE-TUNING OF LARGE LANGUAGE MODELS",
+   "openAccessPdf": {
+    "url": "https://enigma.ist/publications/019f5bbe-27f7-71e4-aeda-1489196a18a2/pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.66693/mathai.1009?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.66693/mathai.1009, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-22",
+   "authors": [
+    {
+     "authorId": "2449876950",
+     "name": "Samariddin Samariddin"
+    }
+   ],
+   "abstract": "Parameter-Efficient Fine-Tuning (PEFT) is essential for adapting Large Language Models (LLMs) under resource constraints, yet existing methods often treat initialization and optimization as separate concerns. This paper introduces OLoRA+, a novel hybrid approach that synergistically combines the structural stability of Orthonormal Low-Rank Adaptation (OLoRA) with the accelerated convergence of LoRA+. By initializing adapter matrices via QR decomposition of pre-trained weights and applying differential learning rates to the upstream and downstream projection matrices, OLoRA+ aims to enhance both stability and feature learning speed. We evaluated the method on the LLMs models using a subset of the Alpaca instruction-following dataset. Empirical results demonstrate that OLoRA+ consistently outperforms the standard OLoRA baseline across Evaluation Loss, BLEU, and ROUGE metrics without incurring additional computational costs. Crucially important that our analysis uncovers two distinct effective learning regimes: a \u201dRefinement\u201d strategy (learning rate ratio \u03bb < 1) that optimizes the initial orthonormal basis, and an \u201dExploration\u201d strategy (\u03bb>1) that seeks new parameter directions. These findings suggest that OLoRA+ offers a more versatile and robust framework for efficient LLM adaptation than its predecessors."
+  },
+  {
+   "paperId": "516846de2eb59cd5763c0cfbf0a31c086b675875",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2605-30537",
+    "ArXiv": "2605.30537",
+    "DOI": "10.48550/arXiv.2605.30537",
+    "CorpusId": 288814308
+   },
+   "title": "The Long-Term Effects of Data Selection in LLM Fine-Tuning",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.30537, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-28",
+   "authors": [
+    {
+     "authorId": "2337838233",
+     "name": "Yuxin Yang"
+    },
+    {
+     "authorId": "2404320817",
+     "name": "Aoxiong Zeng"
+    },
+    {
+     "authorId": "2405505033",
+     "name": "Xiangquan Yang"
+    }
+   ],
+   "abstract": "Data selection is increasingly used to reduce the cost of large language model (LLM) fine-tuning, with recent methods prioritizing samples by current utility, diversity, quality, or influence. This paper studies a different question: when fine-tuning occurs over multiple stages, can selection strategies that look optimal now make the model less adaptable later? We introduce a long-horizon view of LLM data selection in which a selector is evaluated not only by immediate task performance, but also by future adaptation speed, forgetting, capability imbalance, and out-of-distribution robustness. We compare representative random, loss-based, gradient-based, diversity-based, quality-based, and utility-diversity selection families under a unified multi-stage protocol. Through controlled experiments designed to instantiate this protocol, we show how short-term selectors can exhibit rank reversal: they improve the current stage while slowing subsequent learning and increasing forgetting. We formalize this behavior as \\emph{myopic selection}, provide a simple local analysis of why it can occur, and propose a diagnostic Long-Horizon Aware Selection (LHAS) objective that augments immediate utility with coverage, future-proxy transfer, and anti-concentration terms. The study argues that data selection should be evaluated as a training intervention that shapes the model's learning trajectory, rather than only as a local data-efficiency mechanism."
+  },
+  {
+   "paperId": "cf77711633dfdef6f4a50b77464d900726ca2e92",
+   "externalIds": {
+    "CorpusId": 289309855
+   },
+   "title": "Gradient Multi-Normalization for Efficient LLM Training",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://papers.nips.cc/paper_files/paper/2025/file/3d6235707dbc91acda049a0ccd641a7e-Paper-Conference.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": null,
+   "authors": [
+    {
+     "authorId": "1388023074",
+     "name": "Meyer Scetbon"
+    },
+    {
+     "authorId": "2400182564",
+     "name": "Chao Ma"
+    },
+    {
+     "authorId": "2283847031",
+     "name": "Wenbo Gong"
+    },
+    {
+     "authorId": "1452629447",
+     "name": "Ted Meeds"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "76cd58cfa33acaf23501be9730e4be02f62d2b84",
+   "externalIds": {
+    "ArXiv": "2605.23180",
+    "DBLP": "journals/corr/abs-2605-23180",
+    "DOI": "10.48550/arXiv.2605.23180",
+    "CorpusId": 288652677
+   },
+   "title": "Self-Improving In-Context Learning",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.23180, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-22",
+   "authors": [
+    {
+     "authorId": "2127728640",
+     "name": "Baturay Saglam"
+    },
+    {
+     "authorId": "2215926645",
+     "name": "Dionysis Kalogerias"
+    }
+   ],
+   "abstract": "We propose to improve in-context learning (ICL) by optimizing the continuous embeddings of a fixed few-shot prompt at test time. The key observation is that the log-probabilities a model assigns to its demonstrated outputs$\\unicode{x2013}$available from a single forward pass without generating any tokens$\\unicode{x2013}$provide a meaningful signal for how well the model has inferred the task from its demonstrations. We formalize this signal as a bounded, self-supervised confidence proxy and maximize it via zeroth-order optimization over the prompt embeddings, yielding a test-time calibration procedure. The approach requires no finetuning, no token generation, no predefined label set, and no external data, making it equally applicable to both classification and free-form generation tasks. Across a comprehensive suite of ICL tasks, the proposed calibration consistently matches or improves upon the base model and outperforms classification-specific baselines on most tasks. The statistically significant correlation between proxy improvement and downstream accuracy gain confirms that the proposed proxy encodes a reliable optimization signal for in-context learning."
+  },
+  {
+   "paperId": "f94cc6c1d39562d782689c9a3a86a0b3a6918264",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2605-26924",
+    "ArXiv": "2605.26924",
+    "DOI": "10.48550/arXiv.2605.26924",
+    "CorpusId": 288672482
+   },
+   "title": "Learning to Adapt SFT Data for Better Reasoning Generalization",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.26924, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-26",
+   "authors": [
+    {
+     "authorId": "2438880727",
+     "name": "Lisong Sun"
+    },
+    {
+     "authorId": "2315627479",
+     "name": "Li Wang"
+    },
+    {
+     "authorId": "2239428124",
+     "name": "Chen Zhang"
+    },
+    {
+     "authorId": "2403133423",
+     "name": "Jinyang Wu"
+    },
+    {
+     "authorId": "2376009038",
+     "name": "Kui Zhang"
+    },
+    {
+     "authorId": "2274941626",
+     "name": "Tianhao Peng"
+    },
+    {
+     "authorId": "2274078396",
+     "name": "Wenjun Wu"
+    }
+   ],
+   "abstract": "Large language models (LLMs) have achieved remarkable progress, with post-training playing a crucial role in enhancing their reasoning capabilities. Among post-training paradigms, supervised fine-tuning (SFT) is widely used: it leverages external data to provide dense supervision and enables efficient training. However, directly fine-tuning on expert data can hurt generalization when the data distribution is mismatched with the target model's own distribution. In this work, we propose Data Adaptation for Reasoning Tuning (DART), which formulates the use of a fixed, potentially distributionally misaligned SFT dataset as an optimization problem over demonstration transformations. DART trains a mapper model with reinforcement learning to convert original SFT data into model-adapted supervision that better matches the target model's distribution and learning preferences. The transformed data are then used for SFT, allowing the target model to better exploit external supervision. Experiments across multiple models and datasets show that DART improves generalization, achieves higher training efficiency than direct RL, and helps models surpass standard SFT. Our code is available at https://anonymous.4open.science/r/DART525E50D."
+  },
+  {
+   "paperId": "940cbc1d38bf25caca82fe999d0b8e88d78949f0",
+   "externalIds": {
+    "ArXiv": "2605.31183",
+    "DBLP": "journals/corr/abs-2605-31183",
+    "DOI": "10.48550/arXiv.2605.31183",
+    "CorpusId": 288814563
+   },
+   "title": "Steering LLMs? Actually, Sparse Autoencoders can outperform simple baselines",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.31183, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-05-29",
+   "authors": [
+    {
+     "authorId": "2302532437",
+     "name": "Mikkel Godsk J\u00f8rgensen"
+    },
+    {
+     "authorId": "2316636518",
+     "name": "Lars Kai Hansen"
+    }
+   ],
+   "abstract": "Sparse Autoencoders (SAEs) have been seen as a promising avenue for exploring the internals of Large Language Models (LLMs) and for steering model output generation. When AxBench - a model steering benchmark - was introduced in Wu et al. (2025), SAEs did not seem to live up to their original hype due to poor steering performance relative to a set of simple baselines. This work serves as a partial rebuttal for Sparse Autoencoders and suggests that the results of Wu et al. (2025) did not do them full justice. We find that Sparse Autoencoders can, in fact, perform close to on par with the reference LoRA performance on the AxBench benchmark, when features are selected and labelled with our supervised pipeline. We also find that our pipeline selects features that are surprisingly causal of their identified labels when using only its interpretability-based components. Lastly, we present evidence that high sparsity (low l0) may not be crucial for successful steering based on interpretability, which is in contrast to the earlier findings in Wang et al. (2025)."
+  },
+  {
+   "paperId": "f6a7233726228cf712268ee719acaf23cc6f879d",
+   "externalIds": {
+    "ArXiv": "2606.22272",
+    "CorpusId": 289623778
+   },
+   "title": "MixedPEFT: Combining Multiple PEFT Methods with Mixed Objectives for Unsupervised Domain Adaptation",
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2606.22272, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationDate": "2026-06-20",
+   "authors": [
+    {
+     "authorId": "2334755921",
+     "name": "M. Rawhani"
+    },
+    {
+     "authorId": "2334754330",
+     "name": "D. Karaboga"
+    },
+    {
+     "authorId": "145993958",
+     "name": "O. U. Nalbantoglu"
+    },
+    {
+     "authorId": "2290428674",
+     "name": "Alper Basturk"
+    },
+    {
+     "authorId": "2381862719",
+     "name": "B. Akay"
+    }
+   ],
+   "abstract": "Pre-trained language models struggle when applied to new domains, as full fine-tuning is computationally expensive and prone to catastrophic forgetting. This study addresses this challenge by presenting a novel parameter-efficient strategy for unsupervised domain adaptation that combines custom PEFT architectures with mixed-objective training. Our approach simultaneously optimizes classification performance on labeled source domain data and masked language modeling (MLM) on unlabeled target domain data, preserving target domain knowledge while adapting to source domain tasks. Our method employs a custom union of invertible adapters and Low-Rank Adaptation (LoRA) within a unified parameter-efficient framework. Through comprehensive evaluation on the Multi-Genre Natural Language Inference (MNLI) dataset across 20 domain shifts, our approach achieves significant improvements over existing methods: 1.41 percentage points over the current parameter-efficient state-of-the-art UDapter, 1.26 percentage points over the fully-tuned DANN baseline, and 0.86 percentage points over DSN, while utilizing only 7% of the model's trainable parameters. These results establish new benchmarks for parameter-efficient unsupervised domain adaptation and demonstrate that carefully designed PEFT combinations with concurrent optimization can outperform both existing parameter-efficient methods and traditional fully-tuned approaches."
+  }
+ ]
+}

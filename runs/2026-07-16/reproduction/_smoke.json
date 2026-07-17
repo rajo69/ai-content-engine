@@ -1,0 +1,35 @@
+{
+  "config": {
+    "k_shot": 10,
+    "n_train": 10,
+    "lr": 0.003,
+    "steps": 50,
+    "lambda": 0.01,
+    "p_norm": 2,
+    "n_eval": 20,
+    "seeds": [
+      0
+    ],
+    "dataset": "stanfordnlp/sst2",
+    "cv": false,
+    "note": "fixed hyperparameters, NO cross-validation"
+  },
+  "runs": {
+    "gpt2|icl|0": {
+      "acc": 45.0,
+      "frac_pred_pos": 0.95,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 4.2
+    },
+    "gpt2|ahr|0": {
+      "acc": 50.0,
+      "frac_pred_pos": 1.0,
+      "n_trainable": 144,
+      "final_train_loss": 0.9606598019599915,
+      "train_s": 31.6,
+      "eval_s": 6.8
+    }
+  }
+}

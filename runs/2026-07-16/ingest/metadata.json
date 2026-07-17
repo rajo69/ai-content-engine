@@ -1,0 +1,98 @@
+{
+  "arxiv_id": "2607.13425",
+  "title": "Data-Efficient Adaptation of LLMs via Attention Head Reweighting",
+  "authors": [
+    "Tuomas Oikarinen",
+    "Zixiao Chen",
+    "Charlotte Siska",
+    "Tsui-Wei Weng",
+    "Chandan Singh",
+    "Jianfeng Gao"
+  ],
+  "published": "2026-07-15",
+  "venue": "COLM 2026 (published as a conference paper); arXiv preprint 2607.13425v1 [cs.LG]",
+  "abstract": "Learning effectively from limited data is critical in domains like security where labeled examples are scarce. Large language models (LLMs) have demonstrated some capabilities for data-efficient learning, especially through parameter-efficient adaptation methods, but continue to struggle when faced with few samples for difficult tasks. To meet this challenge, we propose Attention Head Reweighting (AHR), a data-efficient method that adapts LLMs to new text-classification tasks by learning only a single scalar per attention head. This drastically reduces the number of parameters that need to be learned by making use of the functional specialization of individual attention heads. Experiments on diverse open-source text classification datasets show that AHR can outperform standard baselines like LoRA when learning from limited samples, despite having 200-1000x fewer trainable parameters, as our AHR only modifies ~0.0001% of the model's parameters. In addition, our learned weights are easy to interpret and can be analyzed to better understand the mechanisms and attention heads responsible for in-context learning abilities in LLMs.",
+  "code_url": "https://github.com/tuomaso/attention-head-reweighting",
+  "code_cloned": true,
+  "code_usable": false,
+  "code_note": "Repo exists and is named in the paper's footnote 1 (announced as 'fully compatible with the peft package'), but contains ONLY a placeholder README at HEAD 5464e7c ('Stay tuned for the full code release shortly'). No source, no entry point, no dependency manifest, no license. selection.json recorded code_url as null; the URL is real but operationally there is nothing to run. Reproduction requires a reimplementation from the paper description -- see ingest/repo-notes.md.",
+  "datasets": [
+    {
+      "name": "SST2 (Stanford Sentiment Treebank v2)",
+      "task": "movie-review sentences -> {Positive, Negative}",
+      "size": "~67k train / 872 val / 1.8k test sentences",
+      "license": "Unspecified -- HF `stanfordnlp/sst2` is tagged `license:unknown` (ungated). Original SST release (Socher et al. 2013) is distributed for research use.",
+      "url": "https://huggingface.co/datasets/stanfordnlp/sst2",
+      "citation": "Socher et al., 2013"
+    },
+    {
+      "name": "AG-News",
+      "task": "news excerpts -> {World, Sports, Business, Sci/Tech}",
+      "size": "120k train / 7.6k test",
+      "license": "Unspecified -- HF `fancyzhx/ag_news` is tagged `license:unknown` (ungated). Upstream AG corpus (ComeToMyHead, via Zhang et al. 2015) is offered for non-commercial academic use.",
+      "url": "https://huggingface.co/datasets/fancyzhx/ag_news",
+      "citation": "Zhang et al., 2015"
+    },
+    {
+      "name": "Emotion",
+      "task": "tweets -> {Sadness, Joy, Love, Anger, Fear, Surprise}",
+      "size": "16k train / 2k val / 2k test (split config)",
+      "license": "HF `dair-ai/emotion` tagged `license:other`; card restricts use to educational and research purposes (ungated).",
+      "url": "https://huggingface.co/datasets/dair-ai/emotion",
+      "citation": "Saravia et al., 2018"
+    },
+    {
+      "name": "Webpage Phishing Detection (Web)",
+      "task": "web URLs -> {Phishing, Legitimate}",
+      "size": "11,430 URLs with 87 extracted features, balanced 50/50",
+      "license": "CC BY 4.0 (verified via Mendeley Data record, version 3)",
+      "url": "https://doi.org/10.17632/c2gw7fy2j4.3",
+      "citation": "Hannousse & Yahiouche, 2021",
+      "note": "Largest claimed AHR margin (+5.8 over best baseline at |D_train| = 10); short inputs, so cheapest to reproduce."
+    },
+    {
+      "name": "Toxigen",
+      "task": "potentially toxic/hateful comments -> {Toxic, Benign}; toxic if average human toxicity score > 3 on a 1-5 scale",
+      "size": "~274k machine-generated statements (annotated eval subset ~9k)",
+      "license": "Unspecified -- HF `toxigen/toxigen-data` carries no license tag (ungated as of this ingest). Upstream Microsoft/ToxiGen release is MIT-licensed but the paper does not restate terms.",
+      "url": "https://huggingface.co/datasets/toxigen/toxigen-data",
+      "citation": "Hartvigsen et al., 2022"
+    },
+    {
+      "name": "Jailbreak Detection",
+      "task": "LLM prompts -> {Jailbreak, Benign}",
+      "size": "~1.4k prompts (balanced version)",
+      "license": "Apache-2.0 (HF tag on `jackhhao/jailbreak-classification`, ungated). Underlying data from Shen et al. 2024 ('Do Anything Now').",
+      "url": "https://huggingface.co/datasets/jackhhao/jailbreak-classification",
+      "citation": "Shen et al., 2024",
+      "note": "Paper explicitly uses the balanced version. Ungated and trivial to load -- best convenience pick for reproduction."
+    }
+  ],
+  "models_evaluated": [
+    { "name": "GPT-2 XL", "hf_id": "gpt2-xl", "params": 1558148000, "ahr_trainable_params": 1200 },
+    { "name": "Llama-3.2-1B", "hf_id": "meta-llama/Llama-3.2-1B", "params": 1235920896, "ahr_trainable_params": 512, "note": "Gated: requires HF license acceptance." },
+    { "name": "Llama-3.2-3B", "hf_id": "meta-llama/Llama-3.2-3B", "params": 3212750496, "ahr_trainable_params": 672, "note": "Gated: requires HF license acceptance." },
+    { "name": "Qwen3-8B", "hf_id": "Qwen/Qwen3-8B", "params": 8190736512, "ahr_trainable_params": 1152, "note": "Ungated." }
+  ],
+  "pdf_saved": true,
+  "fulltext_saved": true,
+  "reference_count": 73,
+  "ingest_notes": {
+    "fulltext_source": "Reconstructed from the PDF text layer via `pdftotext -layout`. No arXiv HTML or ar5iv rendition exists for this ID (both 404 / redirect to abs page). Greek symbols were lost in text extraction and restored from context: gamma_h = per-head scalar, lambda = regularization strength, theta = frozen params.",
+    "references_source": "Semantic Scholar graph API, arXiv:2607.13425/references. Full raw response retained at ingest/_s2_refs_raw.json. 73 of the paper's references resolved; 55 carry an arxivId, 60 carry an abstract, 7 flagged isInfluential.",
+    "degradations": [
+      "Code repo cloned successfully but is an empty placeholder -- no code exists to analyze or run. This is the main degradation and it caps the reproduce stage at 'reimplementation from paper description'.",
+      "No arXiv HTML/ar5iv version available; paper.md came from the PDF text layer rather than structured HTML. Table 2 required arithmetic verification to reconstruct the label-to-row mapping (documented inline in paper.md).",
+      "The paper does not state dataset licenses. Licenses here were verified against the live HF datasets API and the Mendeley DOI record at ingest time, NOT taken from the paper. Four of the six are effectively unlicensed for redistribution purposes: SST2 and AG-News are tagged `license:unknown`, Emotion is `license:other` (research/education only), and Toxigen carries no license tag on HF. Only Web (CC BY 4.0) and Jailbreak (Apache-2.0) have clear terms -- worth noting if any downstream stage republishes example rows."
+    ],
+    "artifacts": {
+      "paper.pdf": "973011 bytes, %PDF-1.7, complete (EOF marker present)",
+      "paper.md": "Full reconstruction, all sections incl. appendices",
+      "references.json": "73 entries, reshaped to {title, year, citationCount, isInfluential, arxivId, abstract}",
+      "repo-notes.md": "Repo assessment + suggested 90-minute reproduction scope and risks",
+      "_appendixB.json/_appendixB.md": "Appendix B per-dataset/per-model accuracy tables (mean +/- std over 10 seeds), extracted for the analyze stage",
+      "_raw.txt": "Raw pdftotext output, retained for provenance",
+      "_s2_refs_raw.json": "Raw Semantic Scholar response"
+    }
+  }
+}

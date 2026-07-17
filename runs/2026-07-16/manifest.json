@@ -12,30 +12,50 @@
       "finishedAt": "2026-07-16T17:05:18.624Z"
     },
     "ingest": {
-      "status": "failed",
-      "startedAt": "2026-07-16T22:21:55.923Z",
-      "error": "Claude Code returned an error result: Reached maximum budget ($2)"
+      "status": "completed",
+      "startedAt": "2026-07-16T22:29:46.086Z",
+      "costUsd": 0.8089745,
+      "finishedAt": "2026-07-16T22:32:09.025Z"
     },
     "litreview": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-16T22:32:09.026Z",
+      "costUsd": 2.385505,
+      "finishedAt": "2026-07-16T22:42:43.302Z"
     },
     "analyze": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-17T02:09:55.085Z",
+      "costUsd": 2.11,
+      "finishedAt": "2026-07-17T02:30:00.000Z",
+      "note": "core.md fully written by the session-limited attempt; a second agent then verified every number in it against the paper (all exact) but was killed before updating this manifest. Marked complete by operator. costUsd covers the first attempt only; the verification attempt's spend was not captured."
     },
     "reproduce": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-17T12:26:42.390Z",
+      "costUsd": 2.3758874999999997,
+      "finishedAt": "2026-07-17T12:33:59.659Z"
     },
     "visualize": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-17T17:18:06.204Z",
+      "costUsd": 0.6117525,
+      "finishedAt": "2026-07-17T17:19:32.614Z"
     },
     "write": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-17T17:19:32.616Z",
+      "costUsd": 2.8564445,
+      "finishedAt": "2026-07-17T17:28:32.884Z"
     },
     "review": {
-      "status": "pending"
+      "status": "completed",
+      "startedAt": "2026-07-17T22:52:30.993Z",
+      "costUsd": 5.309050500000001,
+      "finishedAt": "2026-07-17T23:06:54.727Z"
     }
   },
-  "totalCostUsd": 0.9444775,
+  "totalCostUsd": 19.999194,
   "createdAt": "2026-07-16T17:02:32.396Z",
-  "updatedAt": "2026-07-16T22:28:43.160Z"
+  "updatedAt": "2026-07-17T23:06:54.727Z"
 }

@@ -1,0 +1,69 @@
+{
+  "_meta": {
+    "written_at": "2026-07-17T03:15:00Z",
+    "written_before_any_experiment": true,
+    "paper": "arXiv:2607.13425 — Data-Efficient Adaptation of LLMs via Attention Head Reweighting (AHR)",
+    "source_of_predictions": "analysis/core.md section 7 (pre-registered there); transcribed verbatim, not revised",
+    "tier": "Tier 2 — minimal reimplementation (official repo contains no code)",
+    "scale_caveat": "GPT-2-small (124M) and Qwen2.5-0.5B on laptop CPU, |D_train|=10, 3 seeds, 200 eval examples, fixed hyperparameters with NO cross-validation. The paper uses 4 models up to 8B, 10 seeds, full test sets, and 168-config CV per seed. Absolute numbers are NOT expected to match; only direction-of-effect is testable."
+  },
+  "predictions": [
+    {
+      "id": "P5",
+      "type": "correctness_gate",
+      "must_pass_before_others_count": true,
+      "claim": "gamma = 0 reproduces base-model logits exactly (AHR at init IS the frozen model, per Eq. 3).",
+      "expected": "max abs deviation < 1e-4 between AHR-hooked forward pass with gamma=0 and clean base-model forward pass",
+      "supported_if": "max_abs_dev < 1e-4",
+      "not_supported_if": "max_abs_dev >= 1e-4 — implementation is wrong and every downstream number is void"
+    },
+    {
+      "id": "P1",
+      "type": "replication_of_paper_claim",
+      "claim": "AHR beats LoRA at |D_train|=10.",
+      "paper_basis": "+6.23 points averaged over the 3 modern models at |D|=10 (recomputed from Appendix B)",
+      "expected_direction": "AHR > LoRA on BOTH models",
+      "expected_magnitude": ">= 3.0 points",
+      "supported_if": "AHR - LoRA >= 3.0 on both models",
+      "partially_supported_if": "AHR > LoRA on both but margin < 3.0 on at least one",
+      "not_supported_if": "AHR <= LoRA on either model"
+    },
+    {
+      "id": "P2",
+      "type": "replication_of_paper_admission",
+      "claim": "LoRA at 10 examples is worse than not training at all (Fig. 2b).",
+      "paper_basis": "LoRA loses to ICL in 20 of 24 model x dataset cells at |D|=10",
+      "expected_direction": "LoRA < ICL on at least one model",
+      "supported_if": "LoRA < ICL on >= 1 model",
+      "not_supported_if": "LoRA >= ICL on both models"
+    },
+    {
+      "id": "P3",
+      "type": "our_core_claim_the_gradient",
+      "is_the_experiment": true,
+      "claim": "AHR's advantage over ICL is a DECREASING function of base-model ICL competence. Weak model gains a lot; stronger model gains little.",
+      "paper_basis": "On SST-2: GPT2-XL AHR-ICL = +14.71 vs Qwen3-8B = +0.91 (13.8-point gradient). Across all 6 datasets the per-model AHR-ICL sequence is monotone: +9.20, +3.42, -0.38, -1.45.",
+      "expected_direction": "(AHR - ICL) on GPT-2-small > (AHR - ICL) on Qwen2.5-0.5B",
+      "expected_magnitude": ">= 3.0 points of separation (smaller than the paper's 13.8, since Qwen2.5-0.5B is far weaker at ICL than Qwen3-8B)",
+      "supported_if": "delta_gpt2 - delta_qwen >= 3.0",
+      "partially_supported_if": "ordering holds (delta_gpt2 > delta_qwen) but separation < 3.0",
+      "not_supported_if": "the two deltas are within 3.0 points, or the ordering reverses — which would mean AHR's value is NOT a function of base-model ICL competence and our reframing of the paper is wrong"
+    },
+    {
+      "id": "P4",
+      "type": "our_core_claim_sharp_end",
+      "claim": "On a modern base model, AHR buys little or nothing over doing nothing.",
+      "paper_basis": "The gradient predicts <= +3.42 (Llama-3.2-1B's value) for any model at or above that ICL competence; already negative at 3B (-0.38) and 8B (-1.45).",
+      "expected_direction": "AHR - ICL on Qwen2.5-0.5B is small",
+      "expected_magnitude": "<= +3.0 points",
+      "supported_if": "AHR - ICL <= 3.0 on Qwen2.5-0.5B",
+      "not_supported_if": "AHR - ICL > 3.0 on Qwen2.5-0.5B"
+    }
+  ],
+  "variance_rule": {
+    "statement": "No direction may be declared from a delta smaller than seed variance. If |delta| < std across seeds, the verdict is 'indistinguishable at this scale', not a direction.",
+    "seeds": 3,
+    "reporting": "mean +/- std (population std across seeds) for every arm"
+  },
+  "notes_on_falsifiability": "P1 and P2 restate the paper; passing them only validates the harness. P3 and P4 are the ones that can embarrass us. P3 is the experiment."
+}

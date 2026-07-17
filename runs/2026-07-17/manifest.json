@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-17",
+  "runDir": "C:\\Users\\Rajo\\Desktop\\projects_2026\\ai-content-engine\\runs\\2026-07-17",
+  "paperSlug": null,
+  "paperTitle": null,
+  "arxivId": null,
+  "stages": {
+    "scout": {
+      "status": "running",
+      "startedAt": "2026-07-17T02:07:50.118Z"
+    },
+    "ingest": {
+      "status": "pending"
+    },
+    "litreview": {
+      "status": "pending"
+    },
+    "analyze": {
+      "status": "pending"
+    },
+    "reproduce": {
+      "status": "pending"
+    },
+    "visualize": {
+      "status": "pending"
+    },
+    "write": {
+      "status": "pending"
+    },
+    "review": {
+      "status": "pending"
+    }
+  },
+  "totalCostUsd": 0,
+  "createdAt": "2026-07-17T02:07:50.117Z",
+  "updatedAt": "2026-07-17T02:07:50.118Z"
+}

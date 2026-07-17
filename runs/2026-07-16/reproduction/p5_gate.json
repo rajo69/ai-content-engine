@@ -1,0 +1,23 @@
+{
+  "all_passed": true,
+  "per_model": {
+    "gpt2": {
+      "n_layers": 12,
+      "n_heads_per_layer": 12,
+      "head_dim": 64,
+      "n_trainable_gamma": 144,
+      "max_abs_dev_gamma_zero": 0.0,
+      "max_abs_dev_gamma_perturbed": 7.99755859375,
+      "passed": true
+    },
+    "Qwen/Qwen2.5-0.5B": {
+      "n_layers": 24,
+      "n_heads_per_layer": 14,
+      "head_dim": 64,
+      "n_trainable_gamma": 336,
+      "max_abs_dev_gamma_zero": 0.0,
+      "max_abs_dev_gamma_perturbed": 8.425094604492188,
+      "passed": true
+    }
+  }
+}

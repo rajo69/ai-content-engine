@@ -1,0 +1,165 @@
+{
+  "config": {
+    "k_shot": 10,
+    "n_train": 10,
+    "lr": 0.003,
+    "steps": 50,
+    "lambda": 0.01,
+    "p_norm": 2,
+    "n_eval": 120,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "dataset": "stanfordnlp/sst2",
+    "cv": false,
+    "note": "fixed hyperparameters, NO cross-validation"
+  },
+  "runs": {
+    "gpt2|icl|0": {
+      "acc": 60.833333333333336,
+      "frac_pred_pos": 0.9166666666666666,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 39.3
+    },
+    "gpt2|ahr|0": {
+      "acc": 54.166666666666664,
+      "frac_pred_pos": 1.0,
+      "n_trainable": 144,
+      "final_train_loss": 0.9606598019599915,
+      "train_s": 72.7,
+      "eval_s": 68.3
+    },
+    "gpt2|lora|0": {
+      "acc": 54.166666666666664,
+      "frac_pred_pos": 1.0,
+      "n_trainable": 36864,
+      "final_train_loss": 6.157711322885007e-05,
+      "train_s": 35.5,
+      "eval_s": 42.8
+    },
+    "gpt2|icl|1": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 47.0
+    },
+    "gpt2|ahr|1": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 144,
+      "final_train_loss": 0.9495749473571777,
+      "train_s": 40.7,
+      "eval_s": 49.2
+    },
+    "gpt2|lora|1": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 36864,
+      "final_train_loss": 4.4760941818822175e-05,
+      "train_s": 43.6,
+      "eval_s": 47.6
+    },
+    "gpt2|icl|2": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 46.5
+    },
+    "gpt2|ahr|2": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 144,
+      "final_train_loss": 0.9178329706192017,
+      "train_s": 39.8,
+      "eval_s": 48.1
+    },
+    "gpt2|lora|2": {
+      "acc": 45.833333333333336,
+      "frac_pred_pos": 0.0,
+      "n_trainable": 36864,
+      "final_train_loss": 5.068305108579807e-05,
+      "train_s": 43.7,
+      "eval_s": 48.2
+    },
+    "Qwen/Qwen2.5-0.5B|icl|0": {
+      "acc": 91.66666666666667,
+      "frac_pred_pos": 0.575,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 142.2
+    },
+    "Qwen/Qwen2.5-0.5B|ahr|0": {
+      "acc": 86.66666666666667,
+      "frac_pred_pos": 0.6583333333333333,
+      "n_trainable": 336,
+      "final_train_loss": 0.02561144158244133,
+      "train_s": 129.2,
+      "eval_s": 141.2
+    },
+    "Qwen/Qwen2.5-0.5B|lora|0": {
+      "acc": 70.0,
+      "frac_pred_pos": 0.8416666666666667,
+      "n_trainable": 67584,
+      "final_train_loss": 6.961446342756972e-05,
+      "train_s": 127.0,
+      "eval_s": 141.4
+    },
+    "Qwen/Qwen2.5-0.5B|icl|1": {
+      "acc": 93.33333333333333,
+      "frac_pred_pos": 0.5583333333333333,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 166.9
+    },
+    "Qwen/Qwen2.5-0.5B|ahr|1": {
+      "acc": 91.66666666666667,
+      "frac_pred_pos": 0.5916666666666667,
+      "n_trainable": 336,
+      "final_train_loss": 0.023044103756546974,
+      "train_s": 136.5,
+      "eval_s": 163.5
+    },
+    "Qwen/Qwen2.5-0.5B|lora|1": {
+      "acc": 81.66666666666667,
+      "frac_pred_pos": 0.525,
+      "n_trainable": 67584,
+      "final_train_loss": 4.677651668316685e-05,
+      "train_s": 137.9,
+      "eval_s": 167.6
+    },
+    "Qwen/Qwen2.5-0.5B|icl|2": {
+      "acc": 92.5,
+      "frac_pred_pos": 0.5833333333333334,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 169.7
+    },
+    "Qwen/Qwen2.5-0.5B|ahr|2": {
+      "acc": 89.16666666666667,
+      "frac_pred_pos": 0.6333333333333333,
+      "n_trainable": 336,
+      "final_train_loss": 0.19003166258335114,
+      "train_s": 138.5,
+      "eval_s": 170.0
+    },
+    "Qwen/Qwen2.5-0.5B|lora|2": {
+      "acc": 48.333333333333336,
+      "frac_pred_pos": 0.025,
+      "n_trainable": 67584,
+      "final_train_loss": 0.00012718630023300648,
+      "train_s": 145.3,
+      "eval_s": 172.9
+    }
+  }
+}

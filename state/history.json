@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "date": "2026-07-16",
+    "arxivId": "2607.13425",
+    "title": "Data-Efficient Adaptation of LLMs via Attention Head Reweighting",
+    "slug": "one-scalar-per-head-beats-lora",
+    "score": 7.3
+  }
+]

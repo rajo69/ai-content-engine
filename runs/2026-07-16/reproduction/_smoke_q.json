@@ -1,0 +1,27 @@
+{
+  "config": {
+    "k_shot": 10,
+    "n_train": 10,
+    "lr": 0.003,
+    "steps": 50,
+    "lambda": 0.01,
+    "p_norm": 2,
+    "n_eval": 20,
+    "seeds": [
+      0
+    ],
+    "dataset": "stanfordnlp/sst2",
+    "cv": false,
+    "note": "fixed hyperparameters, NO cross-validation"
+  },
+  "runs": {
+    "Qwen/Qwen2.5-0.5B|icl|0": {
+      "acc": 95.0,
+      "frac_pred_pos": 0.55,
+      "n_trainable": 0,
+      "final_train_loss": null,
+      "train_s": 0.0,
+      "eval_s": 17.7
+    }
+  }
+}
