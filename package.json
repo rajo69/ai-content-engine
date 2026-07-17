@@ -6,6 +6,8 @@
   "scripts": {
     "daily": "tsx harness/pipeline.ts",
     "stage": "tsx harness/pipeline.ts --only",
+    "dash": "tsx harness/dash.ts",
+    "sync": "tsx harness/dash.ts --sync-only",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

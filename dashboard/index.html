@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Content Engine — Ops</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --border:rgba(255,255,255,0.10); --accent:#3987e5; --accent-deep:#184f95;
+    --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+      --grid:#e1e0d9; --border:rgba(11,11,11,0.10); --accent:#2a78d6; --accent-deep:#86b6ef;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background:var(--page); color:var(--ink); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; padding:20px; max-width:1100px; margin:0 auto; }
+  h1 { font-size:16px; font-weight:650; letter-spacing:.2px; }
+  h1 small { color:var(--muted); font-weight:400; margin-left:8px; }
+  header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; }
+  nav { display:flex; gap:4px; margin-bottom:16px; border-bottom:1px solid var(--grid); }
+  nav button { background:none; border:none; color:var(--ink2); padding:8px 14px; cursor:pointer; font:inherit; border-bottom:2px solid transparent; }
+  nav button.active { color:var(--ink); border-bottom-color:var(--accent); font-weight:600; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:16px; }
+  .tile { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+  .tile .v { font-size:24px; font-weight:650; }
+  .tile .l { color:var(--muted); font-size:12px; margin-top:2px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px; }
+  .card h2 { font-size:13px; color:var(--ink2); font-weight:600; text-transform:uppercase; letter-spacing:.6px; margin-bottom:12px; }
+  .stagegrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:8px; }
+  .stage { border:1px solid var(--grid); border-radius:8px; padding:10px; }
+  .stage .nm { font-weight:600; font-size:13px; }
+  .stage .st { font-size:12px; display:flex; align-items:center; gap:5px; margin-top:4px; }
+  .stage .meta { color:var(--muted); font-size:11px; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .dot { font-size:13px; }
+  .s-completed .dot { color:var(--good); }
+  .s-running  .dot { color:var(--accent); animation:pulse 1.2s ease-in-out infinite; }
+  .s-failed   .dot { color:var(--critical); }
+  .s-pending  .dot { color:var(--muted); }
+  @keyframes pulse { 50% { opacity:.25; } }
+  .badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 10px; font-size:12px; font-weight:600; border:1px solid var(--border); }
+  .b-publish { color:var(--good); }  .b-hold { color:var(--warning); } .b-pending { color:var(--muted); }
+  .paper a { color:var(--accent); text-decoration:none; }
+  .paper .just { color:var(--ink2); margin-top:8px; font-size:13px; }
+  .bars { display:grid; gap:6px; margin-top:12px; }
+  .bar-row { display:grid; grid-template-columns:150px 1fr 30px; gap:10px; align-items:center; font-size:12px; }
+  .bar-row .lbl { color:var(--ink2); text-align:right; }
+  .bar-row .val { color:var(--ink2); font-variant-numeric:tabular-nums; }
+  .track { background:var(--grid); border-radius:4px; height:8px; overflow:hidden; }
+  .fill { background:var(--accent); height:100%; border-radius:0 4px 4px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.5px; padding:6px 8px; border-bottom:1px solid var(--grid); }
+  td { padding:7px 8px; border-bottom:1px solid var(--grid); vertical-align:top; }
+  td.num { font-variant-numeric:tabular-nums; text-align:right; }
+  tr.sel { outline:1px solid var(--accent); outline-offset:-1px; border-radius:4px; }
+  tr.click { cursor:pointer; }
+  .muted { color:var(--muted); } .ink2 { color:var(--ink2); }
+  .sev-high { color:var(--critical); font-weight:600; } .sev-medium { color:var(--serious); } .sev-low { color:var(--muted); }
+  .cost-bars { display:flex; align-items:flex-end; gap:2px; height:64px; margin-top:8px; }
+  .cost-bars .cb { flex:1; background:var(--accent); border-radius:4px 4px 0 0; min-height:2px; }
+  ul.lessons { padding-left:18px; } ul.lessons li { margin-bottom:6px; color:var(--ink2); }
+  #err { color:var(--critical); font-size:12px; margin-left:10px; display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Content Engine <small id="clock"></small><span id="err">connection lost — retrying</span></h1>
+  <span class="ink2" id="livehint" style="font-size:12px"></span>
+</header>
+<div class="tiles" id="tiles"></div>
+<nav id="nav"></nav>
+<main id="view"></main>
+<script>
+const TABS = ["Today","Shortlist","Runs","Library","Ops"];
+let tab = "Today", selDate = null, ov = null, detail = null;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = (v) => v == null ? "—" : "$" + Number(v).toFixed(2);
+const dur = (a,b) => { if(!a) return "—"; const ms = (b?new Date(b):new Date()) - new Date(a); const m = Math.round(ms/60000); return m<60?m+"m":(m/60).toFixed(1)+"h"; };
+const ICONS = { completed:"✓", running:"●", failed:"✕", pending:"○" };
+
+async function refresh() {
+  try {
+    ov = await (await fetch("/api/overview")).json();
+    $("err").style.display = "none";
+    if (!selDate && ov.runs.length) selDate = ov.runs[0].date;
+    if (selDate) detail = await (await fetch("/api/run?date="+selDate)).json();
+    render();
+  } catch { $("err").style.display = "inline"; }
+}
+
+function stagesFor(date){ return ov.stages.filter(s => s.run_date === date); }
+
+function tiles() {
+  const latest = ov.runs[0];
+  const totalCost = ov.runs.reduce((a,r)=>a+(r.total_cost_usd||0),0);
+  const ls = latest ? stagesFor(latest.date) : [];
+  const done = ls.filter(s=>s.status==="completed").length;
+  const running = ls.find(s=>s.status==="running");
+  $("tiles").innerHTML = [
+    ["Papers covered", ov.papers.length],
+    ["Latest run", latest ? latest.date : "—"],
+    ["Stages", done + "/" + (ls.length||8) + (running ? " · "+esc(running.name)+" running" : "")],
+    ["Run cost", latest ? money(latest.total_cost_usd) : "—"],
+    ["All-time spend", money(totalCost)],
+  ].map(([l,v])=>`<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  $("livehint").textContent = "synced " + new Date(ov.now).toLocaleTimeString();
+}
+
+function stageTimeline(list) {
+  return `<div class="stagegrid">` + list.map(s => `
+    <div class="stage s-${esc(s.status)}" title="${esc(s.error ?? s.note ?? "")}">
+      <div class="nm">${esc(s.name)}</div>
+      <div class="st"><span class="dot">${ICONS[s.status]??"○"}</span>${esc(s.status)}</div>
+      <div class="meta">${money(s.cost_usd)} · ${s.status==="pending"?"—":dur(s.started_at, s.finished_at)}</div>
+    </div>`).join("") + `</div>`;
+}
+
+function scoreBars(scoresJson) {
+  let scores; try { scores = JSON.parse(scoresJson); } catch { return ""; }
+  return `<div class="bars">` + Object.entries(scores).map(([k,v]) => `
+    <div class="bar-row"><span class="lbl">${esc(k)}</span>
+    <div class="track"><div class="fill" style="width:${Number(v)*10}%"></div></div>
+    <span class="val">${v}</span></div>`).join("") + `</div>`;
+}
+
+function viewToday() {
+  if (!detail?.run) return `<div class="card">No runs yet.</div>`;
+  const r = detail.run;
+  const sel = detail.candidates.find(c=>c.selected) ?? null;
+  const verdict = r.verdict ? (r.verdict==="publish"?`<span class="badge b-publish">✓ publish</span>`:`<span class="badge b-hold">⏸ hold</span>`) : `<span class="badge b-pending">○ review pending</span>`;
+  const findings = detail.findings.length ? `
+    <div class="card"><h2>Review findings (${detail.findings.length})</h2><table><tr><th>Pass</th><th>Severity</th><th>Issue</th><th>Resolution</th></tr>
+    ${detail.findings.map(f=>`<tr><td>${esc(f.pass)}</td><td class="sev-${esc(f.severity)}">${esc(f.severity)}</td><td>${esc(f.issue)}</td><td class="ink2">${esc(f.resolution)}</td></tr>`).join("")}</table></div>` : "";
+  return `
+    <div class="card"><h2>Run ${esc(r.date)} · pipeline ${verdict}</h2>${stageTimeline(detail.stages)}</div>
+    ${sel ? `<div class="card paper"><h2>Selected paper — score ${sel.weighted_score?.toFixed(2)}</h2>
+      <div style="font-size:15px;font-weight:600">${esc(sel.title)}</div>
+      <a href="${esc(sel.url ?? "https://arxiv.org/abs/"+sel.arxiv_id)}" target="_blank">arXiv:${esc(sel.arxiv_id)}</a>
+      <div class="just">${esc(sel.simple_summary ?? sel.one_line_pitch ?? "")}</div>
+      ${scoreBars(sel.scores_json)}</div>` : ""}
+    ${findings}
+    ${detail.outputs.length ? `<div class="card"><h2>Artifacts (${detail.outputs.length})</h2><table><tr><th>Kind</th><th>Path</th><th>Size</th><th>Modified</th></tr>
+      ${detail.outputs.map(o=>`<tr><td>${esc(o.kind)}</td><td class="ink2">${esc(o.rel_path)}</td><td class="num">${(o.bytes/1024).toFixed(1)} KB</td><td class="num">${new Date(o.modified_at).toLocaleTimeString()}</td></tr>`).join("")}</table></div>` : ""}`;
+}
+
+function viewShortlist() {
+  if (!detail?.candidates?.length) return `<div class="card">No candidates for ${esc(selDate)}.</div>`;
+  return `<div class="card"><h2>Shortlist — ${esc(selDate)} (top ${Math.min(5,detail.candidates.length)})</h2>
+    ${detail.candidates.slice(0,5).map(c=>`
+      <div style="padding:12px 0;border-bottom:1px solid var(--grid)">
+        <div><strong>#${c.rank}</strong> ${c.selected?'<span class="badge b-publish">selected</span> ':''}
+          <a class="paper" href="${esc(c.url ?? "https://arxiv.org/abs/"+c.arxiv_id)}" target="_blank" style="color:var(--accent);text-decoration:none">${esc(c.title)}</a>
+          <span class="muted"> · ${c.weighted_score?.toFixed(2)}</span></div>
+        <div class="ink2" style="margin-top:4px;font-size:13px">${esc(c.simple_summary ?? c.one_line_pitch ?? "")}</div>
+        ${scoreBars(c.scores_json)}
+      </div>`).join("")}</div>`;
+}
+
+function viewRuns() {
+  return `<div class="card"><h2>Runs</h2><table><tr><th>Date</th><th>Paper</th><th>Verdict</th><th>Cost</th><th>Stages</th></tr>
+    ${ov.runs.map(r=>{
+      const ss = stagesFor(r.date);
+      const chip = ss.map(s=>ICONS[s.status]??"○").join(" ");
+      return `<tr class="click ${r.date===selDate?"sel":""}" onclick="pick('${r.date}')">
+        <td class="num">${esc(r.date)}</td><td>${esc(r.paper_title ?? (r.proceed===0?"(skipped: "+(r.skip_reason??"below bar")+")":"—"))}</td>
+        <td>${esc(r.verdict ?? "—")}</td><td class="num">${money(r.total_cost_usd)}</td><td style="letter-spacing:3px" class="ink2">${chip}</td></tr>`;
+    }).join("")}</table>
+    <div class="muted" style="margin-top:8px;font-size:12px">✓ completed · ● running · ✕ failed · ○ pending — click a row to inspect it in Today/Shortlist</div></div>`;
+}
+
+function viewLibrary() {
+  if (!ov.papers.length) return `<div class="card">Library is empty until a run completes its write stage.</div>`;
+  return `<div class="card"><h2>Covered papers</h2><table><tr><th>Date</th><th>Title</th><th>arXiv</th><th>Score</th></tr>
+    ${ov.papers.map(p=>`<tr><td class="num">${esc(p.date_covered)}</td><td>${esc(p.title)}</td>
+      <td><a href="https://arxiv.org/abs/${esc(p.arxiv_id)}" target="_blank" style="color:var(--accent)">${esc(p.arxiv_id)}</a></td>
+      <td class="num">${p.score?.toFixed(2) ?? "—"}</td></tr>`).join("")}</table></div>`;
+}
+
+function viewOps() {
+  const runs = [...ov.runs].reverse();
+  const max = Math.max(...runs.map(r=>r.total_cost_usd||0), 1);
+  const byStage = {};
+  for (const s of ov.stages) {
+    byStage[s.name] ??= { name:s.name, ord:s.ord, runs:0, failed:0, cost:0 };
+    if (s.status!=="pending") { byStage[s.name].runs++; byStage[s.name].cost += s.cost_usd||0; }
+    if (s.status==="failed") byStage[s.name].failed++;
+  }
+  return `
+    <div class="card"><h2>Cost per run (USD)</h2>
+      <div class="cost-bars">${runs.map(r=>`<div class="cb" title="${esc(r.date)}: ${money(r.total_cost_usd)}" style="height:${Math.max(3,(r.total_cost_usd||0)/max*100)}%"></div>`).join("")}</div>
+      <div class="muted" style="font-size:11px;margin-top:4px">${esc(runs[0]?.date ?? "")} → ${esc(runs.at(-1)?.date ?? "")}</div></div>
+    <div class="card"><h2>Stage health</h2><table><tr><th>Stage</th><th>Attempted</th><th>Failed legs</th><th>Total cost</th></tr>
+      ${Object.values(byStage).sort((a,b)=>a.ord-b.ord).map(s=>`<tr><td>${esc(s.name)}</td><td class="num">${s.runs}</td>
+        <td class="num ${s.failed?"sev-medium":""}">${s.failed}</td><td class="num">${money(s.cost)}</td></tr>`).join("")}</table></div>
+    <div class="card"><h2>Lessons (cross-run learning)</h2>
+      ${ov.lessons.length ? `<ul class="lessons">${ov.lessons.map(l=>`<li>${esc(l.text)}</li>`).join("")}</ul>` : `<span class="muted">None recorded yet — the review stage writes these.</span>`}</div>`;
+}
+
+function pick(d){ selDate = d; tab = "Today"; fetch("/api/run?date="+d).then(r=>r.json()).then(j=>{detail=j;render();}); }
+
+function render() {
+  if (!ov) return;
+  tiles();
+  $("nav").innerHTML = TABS.map(t=>`<button class="${t===tab?"active":""}" onclick="tab='${t}';render()">${t}</button>`).join("");
+  $("view").innerHTML = { Today:viewToday, Shortlist:viewShortlist, Runs:viewRuns, Library:viewLibrary, Ops:viewOps }[tab]();
+  $("clock").textContent = selDate ? "run " + selDate : "";
+}
+
+refresh();
+setInterval(refresh, 4000);
+</script>
+</body>
+</html>

@@ -6,3 +6,4 @@ runs/**/reproduction/**/venv/
 runs/**/reproduction/**/.venv/
 __pycache__/
 .claude/scheduled_tasks.lock
+state/engine.db

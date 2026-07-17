@@ -41,6 +41,7 @@ Hard constraints:
                   "socialVelocity": 9, "reproducibility": 8, "visualPotential": 7 },
       "weighted_score": 7.6, "one_line_pitch": "..." }]
    ```
+   For the **top 5 candidates by weighted score**, additionally include `"simple_summary"`: 2–3 plain-English sentences a non-expert understands — what the paper claims and why it matters (shown on the ops dashboard's daily shortlist).
 2. `selection.json` — the winner:
    ```json
    { "arxiv_id": "...", "title": "...", "slug": "kebab-case-short-slug", "score": 7.6,
