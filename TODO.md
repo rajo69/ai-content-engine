@@ -21,7 +21,7 @@ Deferred items, in rough priority order. (Deliberately deferred by design — se
 - [ ] Convert stage prompts into proper Claude Code skills (`.claude/skills/`) for ad-hoc invocation.
 
 ## Hardening (as issues appear)
-- [ ] Retry/backoff policy for flaky stage failures (currently: halt + manual `npm run daily` resume).
+- [ ] Retry/backoff policy for flaky stage failures (currently: halt + manual `npm run daily` resume; usage-limit errors now sleep+retry once automatically).
 - [ ] Post-run cleanup of large artifacts (cloned repos, datasets) after N days.
-- [ ] Per-stage wall-clock timeout (currently only turn/budget caps).
+- [x] Per-stage wall-clock timeout — done 2026-07-18 (`maxWallMinutes` per stage in `config.ts`, AbortController in `agent.ts`).
 - [ ] Revisit paid GPU rung (RunPod/Modal spot, ~$0.30/hr) only if the engine earns money.

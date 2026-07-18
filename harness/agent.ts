@@ -7,6 +7,8 @@ export interface StageAgentOptions {
   effort: "low" | "medium" | "high" | "xhigh" | "max";
   maxTurns: number;
   maxBudgetUsd: number;
+  /** Wall-clock cap for this invocation; on expiry the session is aborted. */
+  maxWallMinutes: number;
   allowedTools: string[];
   label: string;
 }
@@ -17,6 +19,19 @@ export interface StageAgentResult {
 }
 
 /**
+ * Thrown when a stage session dies mid-stream (abort, network, session limit).
+ * Carries the cost seen so far, so the manifest never loses spend on failure.
+ */
+export class StageAgentError extends Error {
+  costUsd: number;
+  constructor(message: string, costUsd: number, cause?: unknown) {
+    super(message, cause instanceof Error ? { cause } : undefined);
+    this.name = "StageAgentError";
+    this.costUsd = costUsd;
+  }
+}
+
+/**
  * Runs one pipeline stage as a fully autonomous agent session.
  * The stage prompt carries all task context; tools are constrained per stage.
  */
@@ -24,9 +39,17 @@ export async function runStageAgent(opts: StageAgentOptions): Promise<StageAgent
   let costUsd = 0;
   let finalText = "";
 
+  const abort = new AbortController();
+  let timedOut = false;
+  const wallTimer = setTimeout(() => {
+    timedOut = true;
+    abort.abort();
+  }, opts.maxWallMinutes * 60_000);
+
   const q = query({
     prompt: opts.prompt,
     options: {
+      abortController: abort,
       cwd: opts.cwd,
       model: opts.model,
       effort: opts.effort,
@@ -49,32 +72,47 @@ export async function runStageAgent(opts: StageAgentOptions): Promise<StageAgent
     },
   });
 
-  for await (const message of q) {
-    const anyMsg = message as any;
-    if (message.type === "assistant") {
-      // Best-effort progress logging of assistant text blocks.
-      const blocks = anyMsg.message?.content;
-      if (Array.isArray(blocks)) {
-        for (const b of blocks) {
-          if (b?.type === "text" && typeof b.text === "string" && b.text.trim()) {
-            const line = b.text.trim().split("\n")[0].slice(0, 160);
-            console.log(`  [${opts.label}] ${line}`);
+  try {
+    for await (const message of q) {
+      const anyMsg = message as any;
+      // Any message carrying a cumulative cost updates the running figure, so a
+      // mid-stream failure still reports the spend up to that point.
+      if (typeof anyMsg.total_cost_usd === "number") costUsd = anyMsg.total_cost_usd;
+      if (message.type === "assistant") {
+        // Best-effort progress logging of assistant text blocks.
+        const blocks = anyMsg.message?.content;
+        if (Array.isArray(blocks)) {
+          for (const b of blocks) {
+            if (b?.type === "text" && typeof b.text === "string" && b.text.trim()) {
+              const line = b.text.trim().split("\n")[0].slice(0, 160);
+              console.log(`  [${opts.label}] ${line}`);
+            }
           }
         }
+      } else if (message.type === "result") {
+        if (typeof anyMsg.result === "string") {
+          finalText = anyMsg.result;
+        } else if (anyMsg.result?.content) {
+          finalText = anyMsg.result.content
+            .filter((c: any) => c?.type === "text")
+            .map((c: any) => c.text)
+            .join("\n");
+        }
+        const subtype = anyMsg.subtype ?? anyMsg.result?.stop_reason ?? "done";
+        console.log(`  [${opts.label}] finished (${subtype}) — $${costUsd.toFixed(2)}`);
       }
-    } else if (message.type === "result") {
-      costUsd = typeof anyMsg.total_cost_usd === "number" ? anyMsg.total_cost_usd : 0;
-      if (typeof anyMsg.result === "string") {
-        finalText = anyMsg.result;
-      } else if (anyMsg.result?.content) {
-        finalText = anyMsg.result.content
-          .filter((c: any) => c?.type === "text")
-          .map((c: any) => c.text)
-          .join("\n");
-      }
-      const subtype = anyMsg.subtype ?? anyMsg.result?.stop_reason ?? "done";
-      console.log(`  [${opts.label}] finished (${subtype}) — $${costUsd.toFixed(2)}`);
     }
+  } catch (err) {
+    if (timedOut) {
+      throw new StageAgentError(
+        `wall-clock timeout after ${opts.maxWallMinutes}min (stage session aborted)`,
+        costUsd,
+        err,
+      );
+    }
+    throw new StageAgentError(err instanceof Error ? err.message : String(err), costUsd, err);
+  } finally {
+    clearTimeout(wallTimer);
   }
 
   return { costUsd, finalText };

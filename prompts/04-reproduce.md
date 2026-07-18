@@ -27,6 +27,21 @@ Almost everyone summarizes papers; almost nobody runs them. This stage is the cr
 
 Environment capture: whatever rung you run on, write `reproduction/env-info.json` (python/torch versions, device, RAM, OS) collected at runtime — replication claims are meaningless without it. Statistical reproducibility (same direction of effect from the lockfile + seeds) is the bar, not bitwise identity.
 
+## Long runs: hand the wait to the harness (do NOT poll)
+
+Sitting in your session polling a long-running experiment burns budget for zero insight. For any run expected to take more than ~5 minutes:
+
+1. Launch it **detached** with output redirected to a log: `nohup python train.py > _run.log 2>&1 &` (POSIX) or `start /b python train.py > _run.log 2>&1` (Windows), and make sure the script writes its final metrics to a results file (e.g. `reproduction/results.json`) as its last step.
+2. **Verify it actually started** — wait a few seconds and check `_run.log` is growing past the first iterations. A handoff to a crashed process wastes a whole resume cycle.
+3. Write `_waiting.json` in the run directory root and **end your session immediately**:
+   ```json
+   { "file": "reproduction/results.json",
+     "resume_hint": "P1/P2 both-arms SST-2 run, 3 seeds; on resume compare results.json against predictions.json and finish REPORT.md",
+     "timeout_minutes": 60 }
+   ```
+   `file` is the path (relative to the run directory) whose appearance means results are ready; `resume_hint` is the context your resumed self needs. The harness fs-polls for the file (zero tokens) and re-invokes this stage with your hint. If the wait times out you are resumed anyway — diagnose via the log and degrade gracefully.
+4. Before handing off, make sure the required outputs so far (LAB-NOTES, hyperparams, predictions, a stub REPORT.md) are already on disk — a handoff is a session end like any other.
+
 ## Untrusted-code caution
 
 The cloned repo is unreviewed third-party code and you run with broad permissions on the user's personal machine. Before executing anything from it: skim `setup.py`/`pyproject.toml`/install scripts and the entry points you'll run for anything unrelated to the paper (network calls to odd hosts, credential/file access outside the project, obfuscated blobs, miners). If anything looks off, do NOT run it — fall back to Tier 2 (your own clean reimplementation) and record why in LAB-NOTES.md. Prefer running large/unfamiliar codebases on Kaggle (remote sandbox) rather than locally when that rung is available.

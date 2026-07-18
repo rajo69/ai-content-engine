@@ -22,16 +22,23 @@ export const CONFIG = {
     visualPotential: 0.1, //      has a result that makes one killer chart
   },
 
-  /** Per-stage model, effort, and spend limits. */
+  /**
+   * Per-stage model, effort, spend, and wall-clock limits.
+   * maxWallMinutes bounds one agent invocation (a hung network call can't stall
+   * the pipeline); fs-polling between async-handoff invocations doesn't count.
+   * Ingest runs on Sonnet: it's pure plumbing (downloads, pdftotext, JSON
+   * reshaping). Judgment stages stay on Opus — do not demote them without A/B
+   * evidence via lessons.
+   */
   stages: {
-    scout: { model: "claude-opus-4-8", effort: "high", maxTurns: 60, maxBudgetUsd: 3 },
-    ingest: { model: "claude-opus-4-8", effort: "medium", maxTurns: 60, maxBudgetUsd: 4 },
-    litreview: { model: "claude-opus-4-8", effort: "high", maxTurns: 80, maxBudgetUsd: 5 },
-    analyze: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 60, maxBudgetUsd: 6 },
-    reproduce: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 150, maxBudgetUsd: 10 },
-    visualize: { model: "claude-opus-4-8", effort: "high", maxTurns: 80, maxBudgetUsd: 4 },
-    write: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 80, maxBudgetUsd: 8 },
-    review: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 100, maxBudgetUsd: 8 },
+    scout: { model: "claude-opus-4-8", effort: "high", maxTurns: 60, maxBudgetUsd: 3, maxWallMinutes: 30 },
+    ingest: { model: "claude-sonnet-5", effort: "medium", maxTurns: 60, maxBudgetUsd: 4, maxWallMinutes: 30 },
+    litreview: { model: "claude-opus-4-8", effort: "high", maxTurns: 80, maxBudgetUsd: 5, maxWallMinutes: 45 },
+    analyze: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 60, maxBudgetUsd: 6, maxWallMinutes: 60 },
+    reproduce: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 150, maxBudgetUsd: 10, maxWallMinutes: 150 },
+    visualize: { model: "claude-opus-4-8", effort: "high", maxTurns: 80, maxBudgetUsd: 4, maxWallMinutes: 45 },
+    write: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 80, maxBudgetUsd: 8, maxWallMinutes: 60 },
+    review: { model: "claude-opus-4-8", effort: "xhigh", maxTurns: 100, maxBudgetUsd: 8, maxWallMinutes: 75 },
   },
 
   /**
@@ -44,6 +51,20 @@ export const CONFIG = {
 
   /** Wall-clock cap per reproduction attempt, communicated to the reproduce stage. */
   reproductionTimeBoxMinutes: 90,
+
+  /** Max async-handoff cycles (_waiting.json → poll → re-invoke) per stage. */
+  maxWaitingResumes: 3,
+
+  /** Seconds between existence checks while fs-polling for an awaited file. */
+  waitingPollSeconds: 30,
+
+  /**
+   * On a usage/session-limit error whose reset time is parseable and at most
+   * this far away, the pipeline sleeps until the reset and retries the stage
+   * once. Further away (or unparseable): exit code 3 + _usage-limit.json marker
+   * so a scheduler/operator relaunches at the right moment.
+   */
+  maxUsageLimitSleepHours: 3,
 } as const;
 
 export type StageName = keyof typeof CONFIG.stages;

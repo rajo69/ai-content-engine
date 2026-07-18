@@ -1,13 +1,21 @@
 {
   "date": "2026-07-17",
-  "runDir": "C:\\Users\\Rajo\\Desktop\\projects_2026\\ai-content-engine\\runs\\2026-07-17",
+  "runDir": "/home/user/repo/runs/2026-07-17",
   "paperSlug": null,
   "paperTitle": null,
   "arxivId": null,
   "stages": {
     "scout": {
-      "status": "running",
-      "startedAt": "2026-07-17T02:07:50.118Z"
+      "status": "failed",
+      "startedAt": "2026-07-17T02:07:50.118Z",
+      "finishedAt": "2026-07-18T09:30:00.000Z",
+      "error": "stale: previous launch was killed while this stage was running",
+      "failures": [
+        {
+          "at": "2026-07-18T09:30:00.000Z",
+          "error": "stale: previous launch was killed while this stage was running"
+        }
+      ]
     },
     "ingest": {
       "status": "pending"
@@ -33,5 +41,5 @@
   },
   "totalCostUsd": 0,
   "createdAt": "2026-07-17T02:07:50.117Z",
-  "updatedAt": "2026-07-17T02:07:50.118Z"
+  "updatedAt": "2026-07-18T09:33:35.117Z"
 }

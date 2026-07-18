@@ -56,9 +56,22 @@ npm run daily                        # run/resume today's pipeline
 npm run daily -- --date 2026-07-16   # run/resume a specific date
 npm run daily -- --from analyze      # force re-run from a stage onward
 npm run daily -- --only reproduce    # run a single stage
+npm run daily -- --dry-run           # show what would run; no agent sessions
+npm run dash                         # ops dashboard at http://localhost:4242
 ```
 
-Budgets: per-stage caps and a whole-run ceiling live in `harness/config.ts` (`maxRunBudgetUsd`).
+Budgets: per-stage caps, per-stage wall-clock timeouts (`maxWallMinutes`, enforced via AbortController so a hung call can't stall a stage silently), and a whole-run ceiling live in `harness/config.ts` (`maxRunBudgetUsd`).
+
+Exit codes: `0` complete or skipped day, `1` stage failure / budget abort, `3` usage-limit hit.
+
+### Runtime conventions
+
+- **Async experiment handoff.** A stage that launches a long-running experiment writes `runs/<date>/_waiting.json` (`{"file", "resume_hint", "timeout_minutes"}`) and ends its session; the pipeline fs-polls for the named file (zero tokens) and re-invokes the stage with the hint. Consumed specs are kept as `_waiting.consumed-*.json`; cycles are capped by `maxWaitingResumes`.
+- **Usage limits.** On a usage/session-limit error the pipeline writes `runs/<date>/_usage-limit.json` (with the parsed reset time when possible). If the reset is ≤ `maxUsageLimitSleepHours` away it sleeps and retries the stage once; otherwise it exits with code 3 so a scheduler can relaunch.
+- **Stale runs.** Any stage left `"running"` by a killed launch is auto-marked failed at the next invocation for that date; the dashboard labels abandoned runs "stale".
+- **Run stats.** After each run the pipeline upserts a per-run stats bullet (cost vs caps, resumes, failed legs) into the auto-generated section at the bottom of `state/lessons.md`, so cross-run learning carries numbers.
+- **Prompt proposals.** The review stage may write `review/prompt-proposals.md` with concrete edit suggestions for `prompts/*.md`. They are never auto-applied — read and apply them manually if you agree.
+- **Dashboard.** Artifacts (blog, paper, reproduction report, objections, viz PNGs) render inside the dashboard — click any artifact row or the quick links on the Today tab.
 
 ## Deliberately deferred
 

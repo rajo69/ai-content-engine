@@ -24,6 +24,8 @@ For each output, judge against its platform: Is the hook the first sentence? Doe
 3. Re-check that fixes didn't introduce new inconsistencies.
 4. **Condense lessons (cross-run learning).** Append to `state/lessons.md` in the repository root (create if absent) 1–4 short bullets about the *process*, not the paper: recurring mistakes upstream stages made, what wasted budget, what a future run should do differently (e.g., "scout overweights papers whose datasets are gated — check access before selecting"). These are injected into every future run — only write lessons general enough to reuse, and delete any existing bullet this run proved wrong. Keep the file under ~30 bullets total: when adding would exceed that, merge or drop the least valuable existing ones (it's a distillation, not a log).
 
+5. **Propose prompt improvements (optional but valuable).** When a finding traces back to a weakness in an upstream stage's *instructions* (not just its execution), write `review/prompt-proposals.md`: for each proposal, name the prompt file (`prompts/*.md`), quote the current text, give the exact proposed replacement text, and one sentence on which finding motivated it. NEVER edit `prompts/` yourself — proposals are applied only after operator approval. Skip the file entirely if nothing rises to a concrete edit; vague advice is noise.
+
 ## Required output: `review/verdicts.json`
 
 ```json

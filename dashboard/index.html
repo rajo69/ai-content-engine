@@ -65,6 +65,25 @@
   .cost-bars .cb { flex:1; background:var(--accent); border-radius:4px 4px 0 0; min-height:2px; }
   ul.lessons { padding-left:18px; } ul.lessons li { margin-bottom:6px; color:var(--ink2); }
   #err { color:var(--critical); font-size:12px; margin-left:10px; display:none; }
+  .tabdesc { color:var(--muted); font-size:12px; margin:-6px 0 12px; }
+  .b-stale { color:var(--muted); }
+  .quicklinks { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .quicklinks button { background:none; border:1px solid var(--border); border-radius:999px; color:var(--accent); padding:3px 12px; font:inherit; font-size:12px; cursor:pointer; }
+  .quicklinks button:hover { border-color:var(--accent); }
+  .viewer-head { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .viewer-head button { background:none; border:1px solid var(--border); border-radius:8px; color:var(--ink2); padding:4px 10px; font:inherit; cursor:pointer; }
+  .viewer-head .path { font-size:13px; color:var(--ink2); word-break:break-all; }
+  .md { font-size:14px; line-height:1.65; overflow-wrap:break-word; }
+  .md h1 { font-size:20px; margin:18px 0 8px; } .md h2 { font-size:17px; margin:16px 0 8px; } .md h3, .md h4 { font-size:14px; margin:14px 0 6px; }
+  .md p { margin:8px 0; } .md ul, .md ol { margin:8px 0; padding-left:22px; } .md li { margin:3px 0; }
+  .md pre { background:var(--page); border:1px solid var(--grid); border-radius:8px; padding:10px 12px; overflow-x:auto; font-size:12.5px; margin:10px 0; }
+  .md code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; background:var(--page); border-radius:4px; padding:1px 4px; }
+  .md pre code { background:none; padding:0; }
+  .md blockquote { border-left:3px solid var(--grid); margin:10px 0; padding:2px 12px; color:var(--ink2); }
+  .md table { margin:10px 0; display:block; overflow-x:auto; } .md th, .md td { white-space:nowrap; }
+  .md img { max-width:100%; border-radius:8px; border:1px solid var(--grid); margin:10px 0; }
+  .md hr { border:none; border-top:1px solid var(--grid); margin:14px 0; }
+  .md a { color:var(--accent); }
 </style>
 </head>
 <body>
@@ -84,6 +103,114 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
 const money = (v) => v == null ? "—" : "$" + Number(v).toFixed(2);
 const dur = (a,b) => { if(!a) return "—"; const ms = (b?new Date(b):new Date()) - new Date(a); const m = Math.round(ms/60000); return m<60?m+"m":(m/60).toFixed(1)+"h"; };
 const ICONS = { completed:"✓", running:"●", failed:"✕", pending:"○" };
+const DESCS = {
+  Today: "One run, live: stage timeline, the selected paper, review findings, and clickable artifacts.",
+  Shortlist: "The scout's top candidates for the selected run, with rubric score breakdowns.",
+  Runs: "Every run. Click a row to inspect it. \"stale\" = incomplete and untouched for 24h+ (abandoned launch).",
+  Library: "Papers the engine has covered (recorded once a run reaches the write stage).",
+  Ops: "Spend per run, per-stage health, and the cross-run lessons the review stage distills.",
+};
+
+// ---- Artifact viewer (markdown/images served by /file, rendered in-page) ----
+let viewer = null; // { date, path }
+
+const IMG_EXT = /\.(png|jpe?g|svg)$/i;
+function resolveRel(base, href) {
+  const parts = (base ? base.split("/").slice(0,-1) : []).concat(href.split("/"));
+  const out = [];
+  for (const p of parts) {
+    if (p === "" || p === ".") continue;
+    if (p === "..") out.pop(); else out.push(p);
+  }
+  return out.join("/");
+}
+function fileUrl(date, relPath) { return "/file?date=" + encodeURIComponent(date) + "&path=" + encodeURIComponent(relPath); }
+
+// Minimal self-contained markdown renderer — covers what the pipeline writes
+// (headings, emphasis, code, lists, tables, quotes, links, images).
+function mdRender(src, date, basePath) {
+  const inline = (s) => esc(s)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, href) =>
+      /^https?:/.test(href) ? `<img src="${href}" alt="${alt}">` : `<img src="${fileUrl(date, resolveRel(basePath, href))}" alt="${alt}">`)
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, txt, href) =>
+      /^https?:/.test(href)
+        ? `<a href="${href}" target="_blank">${txt}</a>`
+        : `<a href="#" onclick="openArtifact('${esc(date)}','${esc(resolveRel(basePath, href))}');return false">${txt}</a>`)
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
+  const lines = src.split(/\r?\n/);
+  const out = [];
+  let i = 0;
+  const listItem = (l) => l.match(/^\s*(?:[-*+]|\d+\.)\s+(.*)$/);
+  while (i < lines.length) {
+    const l = lines[i];
+    if (/^\s*```/.test(l)) {
+      const buf = [];
+      for (i++; i < lines.length && !/^\s*```/.test(lines[i]); i++) buf.push(lines[i]);
+      i++;
+      out.push(`<pre><code>${esc(buf.join("\n"))}</code></pre>`);
+    } else if (/^#{1,6}\s/.test(l)) {
+      const n = l.match(/^#+/)[0].length;
+      out.push(`<h${Math.min(n,4)}>${inline(l.replace(/^#+\s*/, ""))}</h${Math.min(n,4)}>`);
+      i++;
+    } else if (/^\s*([-*_])\s*\1\s*\1[\s\-*_]*$/.test(l)) {
+      out.push("<hr>"); i++;
+    } else if (/^\s*\|/.test(l)) {
+      const rows = [];
+      while (i < lines.length && /^\s*\|/.test(lines[i])) { rows.push(lines[i]); i++; }
+      const cells = (r) => r.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+      const body = rows.filter((r) => !/^\s*\|[\s:|-]+\|?\s*$/.test(r));
+      out.push("<table>" + body.map((r, ri) =>
+        "<tr>" + cells(r).map((c) => ri === 0 ? `<th>${inline(c)}</th>` : `<td>${inline(c)}</td>`).join("") + "</tr>").join("") + "</table>");
+    } else if (/^\s*>/.test(l)) {
+      const buf = [];
+      while (i < lines.length && /^\s*>/.test(lines[i])) { buf.push(lines[i].replace(/^\s*>\s?/, "")); i++; }
+      out.push(`<blockquote>${buf.map(inline).join("<br>")}</blockquote>`);
+    } else if (listItem(l)) {
+      const ordered = /^\s*\d+\./.test(l);
+      const items = [];
+      while (i < lines.length && listItem(lines[i])) { items.push(listItem(lines[i])[1]); i++; }
+      const tag = ordered ? "ol" : "ul";
+      out.push(`<${tag}>` + items.map((it) => `<li>${inline(it)}</li>`).join("") + `</${tag}>`);
+    } else if (l.trim() === "") {
+      i++;
+    } else {
+      const buf = [];
+      while (i < lines.length && lines[i].trim() !== "" && !/^(#{1,6}\s|\s*```|\s*\||\s*>)/.test(lines[i]) && !listItem(lines[i])) { buf.push(lines[i]); i++; }
+      out.push(`<p>${buf.map(inline).join(" ")}</p>`);
+    }
+  }
+  return out.join("\n");
+}
+
+async function openArtifact(date, relPath) {
+  viewer = { date, path: relPath };
+  render();
+}
+function closeViewer() { viewer = null; render(); }
+
+async function viewerBody(v) {
+  if (IMG_EXT.test(v.path)) return `<img src="${fileUrl(v.date, v.path)}" alt="${esc(v.path)}" style="max-width:100%">`;
+  const r = await fetch(fileUrl(v.date, v.path));
+  if (!r.ok) return `<span class="muted">Could not load ${esc(v.path)} (${r.status}) — the stage that writes it may not have run yet.</span>`;
+  const text = await r.text();
+  if (/\.md$/i.test(v.path)) return `<div class="md">${mdRender(text, v.date, v.path)}</div>`;
+  return `<pre style="white-space:pre-wrap;overflow-x:auto">${esc(text)}</pre>`;
+}
+
+function viewerView() {
+  // Body loads async; render a shell now, fill it when the fetch lands.
+  const v = viewer;
+  viewerBody(v).then((html) => {
+    const el = $("viewer-body");
+    if (el && viewer && viewer.date === v.date && viewer.path === v.path) el.innerHTML = html;
+  });
+  return `<div class="card">
+    <div class="viewer-head"><button onclick="closeViewer()">← back</button>
+      <span class="path">runs/${esc(v.date)}/${esc(v.path)}</span></div>
+    <div id="viewer-body" class="md"><span class="muted">loading…</span></div></div>`;
+}
 
 async function refresh() {
   try {
@@ -91,7 +218,8 @@ async function refresh() {
     $("err").style.display = "none";
     if (!selDate && ov.runs.length) selDate = ov.runs[0].date;
     if (selDate) detail = await (await fetch("/api/run?date="+selDate)).json();
-    render();
+    if (viewer) tiles(); // don't rebuild an open artifact viewer on the poll tick
+    else render();
   } catch { $("err").style.display = "inline"; }
 }
 
@@ -138,16 +266,23 @@ function viewToday() {
   const findings = detail.findings.length ? `
     <div class="card"><h2>Review findings (${detail.findings.length})</h2><table><tr><th>Pass</th><th>Severity</th><th>Issue</th><th>Resolution</th></tr>
     ${detail.findings.map(f=>`<tr><td>${esc(f.pass)}</td><td class="sev-${esc(f.severity)}">${esc(f.severity)}</td><td>${esc(f.issue)}</td><td class="ink2">${esc(f.resolution)}</td></tr>`).join("")}</table></div>` : "";
+  const quick = [
+    ["Blog", "outputs/blog-long.md"], ["Paper", "outputs/paper/paper.md"],
+    ["Repro report", "reproduction/REPORT.md"], ["Viz", "viz/index.md"],
+    ["Objections", "review/objections.md"], ["Verdicts", "review/verdicts.json"],
+    ["X thread", "outputs/social/x-thread.md"],
+  ];
   return `
-    <div class="card"><h2>Run ${esc(r.date)} · pipeline ${verdict}</h2>${stageTimeline(detail.stages)}</div>
+    <div class="card"><h2>Run ${esc(r.date)} · pipeline ${verdict}</h2>${stageTimeline(detail.stages)}
+      <div class="quicklinks">${quick.map(([label,p])=>`<button onclick="openArtifact('${esc(r.date)}','${p}')">${label}</button>`).join("")}</div></div>
     ${sel ? `<div class="card paper"><h2>Selected paper — score ${sel.weighted_score?.toFixed(2)}</h2>
       <div style="font-size:15px;font-weight:600">${esc(sel.title)}</div>
       <a href="${esc(sel.url ?? "https://arxiv.org/abs/"+sel.arxiv_id)}" target="_blank">arXiv:${esc(sel.arxiv_id)}</a>
       <div class="just">${esc(sel.simple_summary ?? sel.one_line_pitch ?? "")}</div>
       ${scoreBars(sel.scores_json)}</div>` : ""}
     ${findings}
-    ${detail.outputs.length ? `<div class="card"><h2>Artifacts (${detail.outputs.length})</h2><table><tr><th>Kind</th><th>Path</th><th>Size</th><th>Modified</th></tr>
-      ${detail.outputs.map(o=>`<tr><td>${esc(o.kind)}</td><td class="ink2">${esc(o.rel_path)}</td><td class="num">${(o.bytes/1024).toFixed(1)} KB</td><td class="num">${new Date(o.modified_at).toLocaleTimeString()}</td></tr>`).join("")}</table></div>` : ""}`;
+    ${detail.outputs.length ? `<div class="card"><h2>Artifacts (${detail.outputs.length}) — click to read</h2><table><tr><th>Kind</th><th>Path</th><th>Size</th><th>Modified</th></tr>
+      ${detail.outputs.map(o=>`<tr class="click" onclick="openArtifact('${esc(r.date)}','${esc(o.rel_path).replace(/\\/g,"/")}')"><td>${esc(o.kind)}</td><td style="color:var(--accent)">${esc(o.rel_path)}</td><td class="num">${(o.bytes/1024).toFixed(1)} KB</td><td class="num">${new Date(o.modified_at).toLocaleTimeString()}</td></tr>`).join("")}</table></div>` : ""}`;
 }
 
 function viewShortlist() {
@@ -163,13 +298,20 @@ function viewShortlist() {
       </div>`).join("")}</div>`;
 }
 
+function isStale(r) {
+  const ss = stagesFor(r.date);
+  const incomplete = ss.some(s=>s.status!=="completed");
+  return r.proceed!==0 && incomplete && (Date.now() - new Date(r.updated_at)) > 24*3600e3;
+}
+
 function viewRuns() {
   return `<div class="card"><h2>Runs</h2><table><tr><th>Date</th><th>Paper</th><th>Verdict</th><th>Cost</th><th>Stages</th></tr>
     ${ov.runs.map(r=>{
       const ss = stagesFor(r.date);
       const chip = ss.map(s=>ICONS[s.status]??"○").join(" ");
+      const stale = isStale(r) ? ' <span class="badge b-stale">stale</span>' : "";
       return `<tr class="click ${r.date===selDate?"sel":""}" onclick="pick('${r.date}')">
-        <td class="num">${esc(r.date)}</td><td>${esc(r.paper_title ?? (r.proceed===0?"(skipped: "+(r.skip_reason??"below bar")+")":"—"))}</td>
+        <td class="num">${esc(r.date)}</td><td>${esc(r.paper_title ?? (r.proceed===0?"(skipped: "+(r.skip_reason??"below bar")+")":"—"))}${stale}</td>
         <td>${esc(r.verdict ?? "—")}</td><td class="num">${money(r.total_cost_usd)}</td><td style="letter-spacing:3px" class="ink2">${chip}</td></tr>`;
     }).join("")}</table>
     <div class="muted" style="margin-top:8px;font-size:12px">✓ completed · ● running · ✕ failed · ○ pending — click a row to inspect it in Today/Shortlist</div></div>`;
@@ -203,13 +345,16 @@ function viewOps() {
       ${ov.lessons.length ? `<ul class="lessons">${ov.lessons.map(l=>`<li>${esc(l.text)}</li>`).join("")}</ul>` : `<span class="muted">None recorded yet — the review stage writes these.</span>`}</div>`;
 }
 
-function pick(d){ selDate = d; tab = "Today"; fetch("/api/run?date="+d).then(r=>r.json()).then(j=>{detail=j;render();}); }
+function pick(d){ selDate = d; tab = "Today"; viewer = null; fetch("/api/run?date="+d).then(r=>r.json()).then(j=>{detail=j;render();}); }
 
 function render() {
   if (!ov) return;
   tiles();
-  $("nav").innerHTML = TABS.map(t=>`<button class="${t===tab?"active":""}" onclick="tab='${t}';render()">${t}</button>`).join("");
-  $("view").innerHTML = { Today:viewToday, Shortlist:viewShortlist, Runs:viewRuns, Library:viewLibrary, Ops:viewOps }[tab]();
+  $("nav").innerHTML = TABS.map(t=>`<button class="${t===tab?"active":""}" onclick="tab='${t}';viewer=null;render()">${t}</button>`).join("");
+  $("view").innerHTML = viewer
+    ? viewerView()
+    : `<div class="tabdesc">${esc(DESCS[tab] ?? "")}</div>` +
+      { Today:viewToday, Shortlist:viewShortlist, Runs:viewRuns, Library:viewLibrary, Ops:viewOps }[tab]();
   $("clock").textContent = selDate ? "run " + selDate : "";
 }
 

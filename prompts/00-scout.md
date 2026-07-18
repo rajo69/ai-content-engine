@@ -32,6 +32,12 @@ Hard constraints:
 - Prefer papers ≤ 7 days old; never older than 30 days.
 - The paper must have a public PDF (arXiv preferred).
 
+## Prior-art spot check before you commit (cheap, do it)
+
+A pure rediscovery wastes an entire pipeline run (a run once selected an uncited prior-art twin that litreview only caught after ingest+litreview budget was spent). Before finalizing the winner, run the Semantic Scholar recommendations check on your **top 3 candidates** — one call each:
+`https://api.semanticscholar.org/recommendations/v1/papers/forpaper/arXiv:<id>?fields=title,abstract,publicationDate,externalIds&limit=20` (send `S2_API_KEY` env var as `x-api-key` header if set).
+Scan the neighbors for an EARLIER paper whose method sounds like the candidate's core idea. If you find one: cut that candidate's `contrarianAngle` and `deltaToClaimRatio` scores accordingly, re-rank, and note the check's outcome in the selection `justification` (litreview still does the deep novelty check later — yours is the cheap tripwire). If the API is throttled or down, proceed and say so in the justification.
+
 ## Required outputs (write into the run directory)
 
 1. `candidates.json` — array of 10–20 candidates:

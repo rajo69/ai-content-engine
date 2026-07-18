@@ -48,10 +48,46 @@ function runDetail(date: string) {
 
 const INDEX_HTML = path.join(REPO_ROOT, "dashboard", "index.html");
 
+const FILE_TYPES: Record<string, string> = {
+  ".md": "text/markdown; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".log": "text/plain; charset=utf-8",
+  ".py": "text/plain; charset=utf-8",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".svg": "image/svg+xml",
+  ".pdf": "application/pdf",
+};
+
+/** Serve a run artifact for the in-dashboard viewer. Confined to runs/<date>/. */
+function serveRunFile(res: http.ServerResponse, date: string, rel: string): void {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    res.writeHead(400);
+    return void res.end("bad date");
+  }
+  const runDir = path.resolve(REPO_ROOT, "runs", date);
+  const full = path.resolve(runDir, rel);
+  if (full !== runDir && !full.startsWith(runDir + path.sep)) {
+    res.writeHead(403);
+    return void res.end("path escapes run directory");
+  }
+  if (!fs.existsSync(full) || !fs.statSync(full).isFile()) {
+    res.writeHead(404);
+    return void res.end("not found");
+  }
+  const type = FILE_TYPES[path.extname(full).toLowerCase()] ?? "application/octet-stream";
+  res.writeHead(200, { "content-type": type });
+  res.end(fs.readFileSync(full));
+}
+
 const server = http.createServer((req, res) => {
   try {
     const url = new URL(req.url ?? "/", `http://localhost:${PORT}`);
-    if (url.pathname === "/api/overview") {
+    if (url.pathname === "/file") {
+      serveRunFile(res, url.searchParams.get("date") ?? "", url.searchParams.get("path") ?? "");
+    } else if (url.pathname === "/api/overview") {
       res.writeHead(200, { "content-type": "application/json" });
       res.end(JSON.stringify(overview()));
     } else if (url.pathname === "/api/run") {

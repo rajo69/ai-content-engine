@@ -1,6 +1,6 @@
 # Stage 6 — Write: the full content suite
 
-Inputs: everything produced so far — `analysis/core.md`, `litreview/*.md`, `reproduction/REPORT.md`, `viz/index.md`, `ingest/metadata.json`. Read them before writing a word.
+Inputs — write from the **distilled layer**, not the raw paper. Read fully before writing a word: `analysis/core.md` (plus `reproduction/analysis-delta.md` if present), `reproduction/REPORT.md`, `litreview/lineage.md`, `viz/index.md`, `ingest/metadata.json`; use `litreview/bibliography.md` for citations. Do NOT read `ingest/paper.md` end-to-end — the analysis already distilled it and re-reading burns budget. Open it only for targeted spot checks (an exact equation, a quoted number, a phrasing you must not misstate). The review stage retains full-paper access and will catch grounding errors.
 
 **Precedence rule:** if `reproduction/analysis-delta.md` exists, it amends `analysis/core.md` — where they conflict, the delta (experimental evidence) wins. If `litreview/lineage.md`'s novelty check found prior art, that must be stated in every output, not buried.
 

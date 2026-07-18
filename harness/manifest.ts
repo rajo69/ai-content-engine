@@ -12,7 +12,14 @@ export function manifestPath(runDir: string): string {
 export function loadOrCreateManifest(runDir: string, date: string): RunManifest {
   const p = manifestPath(runDir);
   if (fs.existsSync(p)) {
-    return JSON.parse(fs.readFileSync(p, "utf-8")) as RunManifest;
+    const manifest = JSON.parse(fs.readFileSync(p, "utf-8")) as RunManifest;
+    // runDir is machine-specific; a manifest created elsewhere (e.g. Windows)
+    // must not steer writes to a path that doesn't exist here.
+    if (manifest.runDir !== runDir) {
+      manifest.runDir = runDir;
+      saveManifest(manifest);
+    }
+    return manifest;
   }
   const stages = {} as Record<StageName, StageRecord>;
   for (const name of STAGE_NAMES) stages[name] = { status: "pending" };

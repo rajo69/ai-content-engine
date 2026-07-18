@@ -4,6 +4,12 @@ Written 2026-07-18 after the first complete run (2026-07-16, verdict: publish, $
 Context: run #1 evidence is in `runs/2026-07-16/`, process lessons in `state/lessons.md`,
 system audit in `REVIEW.md`, deferred features in `TODO.md`. Read those before changing anything.
 
+> **STATUS (2026-07-18, implemented):** A1–A3, B4–B7, C8–C10, and D11–D12 are done
+> (D13 was guidance-only and honored; E stays deferred). Conventions are documented in
+> README "Runtime conventions". Also fixed beyond this list: manifests no longer pin a
+> machine-specific absolute `runDir` (reconciled on load), and `--dry-run` was added.
+> Items below are kept as written for the rationale record.
+
 ## A. Token efficiency (zero quality loss — do these first)
 
 1. **Async experiment handoff (biggest win).** The reproduce agent burned budget polling its
